@@ -140,4 +140,18 @@ class FilmController extends Controller
 
         return view("films.list", ["films" => $films_filtered, "title" => $title]);
     }
+
+    public function countFilms()
+    {
+        $countFilms = 0;
+
+        $title = "Contador de pelis";
+        $films = FilmController::readFilms();
+
+        foreach ($films as $film) {
+            $countFilms++;
+        }
+
+        return view("films.counter", ["films" => $films, "countFilms" => $countFilms, "title" => $title]);
+    }
 }
