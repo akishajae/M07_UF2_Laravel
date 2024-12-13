@@ -55,7 +55,7 @@ class FilmController extends Controller
         return view('films.list', ["films" => $new_films, "title" => $title]);
     }
     /**
-     * Lista TODAS las películas o filtra x año o categoría.
+     * Lista TODAS las películas (o filtra x año o categoría.)
      */
     public function listFilms()
     {
@@ -80,6 +80,11 @@ class FilmController extends Controller
         return view("films.list", ["films" => $films_filtered, "title" => $title]);
     }
 
+    /**
+     * Lista pelis por año
+     * @param mixed $year
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     */
     public function listFilmsByYear($year = null)
     {
         $films_filtered = [];
@@ -102,6 +107,11 @@ class FilmController extends Controller
         return view("films.list", ["films" => $films_filtered, "title" => $title]);
     }
 
+    /**
+     * Lista pelis por género
+     * @param mixed $genre
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     */
     public function listFilmsByGenre($genre = null)
     {
         $films_filtered = [];
@@ -123,6 +133,10 @@ class FilmController extends Controller
         return view("films.list", ["films" => $films_filtered, "title" => $title]);
     }
 
+    /**
+     * Lista pelis ordenadas por año (más nuevo a más antiguo)
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     */
     public function sortFilms()
     {
         $films_filtered = [];
@@ -141,6 +155,10 @@ class FilmController extends Controller
         return view("films.list", ["films" => $films_filtered, "title" => $title]);
     }
 
+    /**
+     * Muestra la cuenta de pelis registradas
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     */
     public function countFilms()
     {
         $countFilms = 0;
