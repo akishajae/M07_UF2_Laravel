@@ -1,15 +1,12 @@
-Analysis
-1. Routes
+<h1>Analysis</h1>
+<h3>1. Routes</h3>
+    <h4>1.1. What are they and their purpose?</h4>
+    Routes are the web URLs that users can access in the application web.
+    They define the actions that have to be performed (what the application is supposed to do) when a URL is hit.
+    <h4>1.2. Where are they defined?</h4>
+    In the "routes" folder in the web.php file.
+    <h4>1.3. How many are there?</h4>
    <br>
-    1.1. What are they and their purpose?
-   <br>
-    1.2. Where are they defined?
-   <br>
-    In the "routes" folder, usually in the web.php
-   <br><br>
-    1.3. How many are there?
-   <br>
-    - API: 1 
     - Web: 2
     - (Channel: 1 (broadcast))
     - (Console: 1 (artisan))
