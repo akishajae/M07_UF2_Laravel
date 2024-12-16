@@ -1,27 +1,24 @@
-<h1>Analysis</h1>
-<h3>1. Routes</h3>
-    <h4>1.1. What are they and their purpose?</h4>
-    Routes are the web URLs that users can access in the application web.
-    They define the actions that have to be performed (what the application is supposed to do) when a URL is hit.
-    <h4>1.2. Where are they defined?</h4>
+# Analysis
+### 1. Routes
+    1.1. What are they and their purpose?
+    
+        Routes are the web URLs that users can access in the application web.
+        They define the actions that have to be performed (what the application is supposed to do) when a URL is hit.
+    
+    #### 1.2. Where are they defined?
+    
     In the "routes" folder in the web.php file.
-    <h4>1.3. How many are there?</h4>
-   <br>
-    - Web: 2
-    - (Channel: 1 (broadcast))
-    - (Console: 1 (artisan))
-   <br>
-    1.4. How do they group?
-   <br>
-    Using this code:
-    <br>
+    #### 1.3. How many are there?
+    There are 2:
+
+    <h4>1.4. How do they group?</h4>
+    Using this code: 
+    
     Route::group(['prefix'=>'filmout'], function(){ 
-        (Here you insert other routes) 
+    // (Here you insert other routes) 
     });
-    <br>
-    (Middleware?)
-   <br><br>
-    1.5. Which prefix do they use?
+
+    <h4>1.5. Which prefix do they use?</h4>
       Route::
    
    <br><br>
