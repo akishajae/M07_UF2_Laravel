@@ -5,6 +5,7 @@ namespace App\Http\Middleware;
 use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Illuminate\Support\Str;
 
 class ValidateUrl
 {
@@ -17,7 +18,11 @@ class ValidateUrl
     {
         $url = $request->route('url');
 
-        // validate url
+        if(isset($url)){
+            if (!Str::isUrl($url)) {
+                
+            }
+        }
 
         return $next($request);
     }
