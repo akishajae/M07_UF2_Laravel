@@ -172,4 +172,9 @@ class FilmController extends Controller
 
         return view("films.counter", ["films" => $films, "countFilms" => $countFilms, "title" => $title]);
     }
+
+    public function createFilm() {
+        
+    }
+    
 }
