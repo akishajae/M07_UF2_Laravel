@@ -29,7 +29,9 @@
 
     <!-- Include any additional HTML or Blade directives here -->
     <h1 class="mt-4">Añadir Pelicula</h1>
-    <form>
+    <form method="POST" action="/filmin/createFilm">
+        @csrf
+
         <label for="name">Nombre</label>
         <input type="text" id="name">
 
