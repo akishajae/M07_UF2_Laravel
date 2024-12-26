@@ -8,7 +8,17 @@ They define the actions that have to be performed (what the application is suppo
 In the "routes" folder in the _web.php_ file.
     
 #### 1.3. How many are there?
-There are 2 routes, right now.
+There are 4 routes, right now:
+
+    Route::get('/', function () {
+        return view('welcome');
+    });
+
+    Route::get('oldFilms/{year?}',[FilmController::class, "listOldFilms"])->name('oldFilms');
+
+    Route::get('newFilms/{year?}',[FilmController::class, "listNewFilms"])->name('newFilms');
+    
+    Route::get('films',[FilmController::class, "listFilms"])->name('listFilms');
 
 #### 1.4. How do they group?
 Using this code: 
@@ -21,45 +31,64 @@ Using this code:
       Route::
 
 #### 1.6. Which parameters do they use?
-    
+They use these parameters:
+- year
+- genre
+
+Parameters in routes are defined like this (the _?_ means that it's optional):
+
+Route::get('newFilms/<code>**{year?}**</code>',[FilmController::class, "listNewFilms"])->name('newFilms');
+
 * * *
 
 ### 2. Middleware
 #### 2.1. What are they and their purpose?
+
 #### 2.2. Where are they defined?
+
 #### 2.3. How many are there?
-There 10 in total.
+There are 10 in total.
+
 #### 2.4. Which parameters do they use?
+
 #### 2.5. When are they invoked?
 
 * * *
 
 ### 3. Data
 #### 3.1. Where are they defined?
+
 #### 3.2. How are they read?
 
 * * *
 
 ### 4. Controller
 #### 4.1. What are they and their purpose?
+
 #### 4.2. Where are they defined?
 They are in the _Controllers_ folder.
+
 #### 4.3. How many are there?
-There are 2 controllers.
+There are 2 controllers:
+- Controller
+- FilmController
 
 * * *
 
 ### 5. View
 #### 5.1. What are they and their purpose?
+
 #### 5.2. Where are they defined?
-They are in the _\resources\views_ folder, usually they are files with _blade.php_.
+They are in the _\resources\views_ folder, usually they are files with the sufix _blade.php_.
+
 #### 5.3. How many are there?
-There are 2 views.
+There are 2 views, right now:
+- welcome.blade.php
+- list.blade.php
 
 * * *
 
 # Implementation
-- [x] #1
 - [x] 1. add fields country(string) and duration(int) to current data and adapt all components required to list them.
 - [x] 2. split current route 'films/{year?}/{genre?}' in two new routes filmsByYear and filmsByGenre, every one only receives its corresponding parameter
 - [x] 3. adapt current function listFilms in FilmController to have listFilmsByYear and listFilmsByGenre for previous defined routes.
