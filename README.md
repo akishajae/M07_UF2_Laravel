@@ -2,6 +2,7 @@
 ### 1. Routes
 #### 1.1. What are they and their purpose?   
 Routes are the web URLs that users can access in the application web.
+
 They define the actions that have to be performed (what the application is supposed to do) when a URL is hit.
     
 #### 1.2. Where are they defined?
@@ -43,8 +44,12 @@ Route::get('newFilms/<code>**{year?}**</code>',[FilmController::class, "listNewF
 
 ### 2. Middleware
 #### 2.1. What are they and their purpose?
+Middlewares are like filters for HTTP requests, this means that before accessing to the URL, it will go through the middleware that has been added first.
+
+With a middleware it would be possible to intercept and modify a request before reaching the controller's action.
 
 #### 2.2. Where are they defined?
+They are defined in files that have to be put inside of a folder called _Middleware_. And to be able to use it, it's necessary to put it inside of the _Kernel.php_ file.
 
 #### 2.3. How many are there?
 There are 10 in total.
