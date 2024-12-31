@@ -46,7 +46,30 @@ Route::get('newFilms/<code>**{year?}**</code>',[FilmController::class, "listNewF
 #### 2.1. What are they and their purpose?
 Middlewares are like filters for HTTP requests, this means that before accessing to the URL, it will go through the middleware that has been added first.
 
-With a middleware it would be possible to intercept and modify a request before reaching the controller's action.
+With a middleware it would be possible to intercept and modify a request [before or after](https://laravel.com/docs/11.x/middleware#middleware-and-responses) reaching the controller's action.
+
+Before Middleware:
+
+    class BeforeMiddleware
+    {
+        public function handle(Request $request, Closure $next): Response
+        {
+            // Perform action
+            return $next($request);
+        }
+    }
+
+After Middleware:
+
+    class AfterMiddleware
+    {
+        public function handle(Request $request, Closure $next): Response
+        {
+            $response = $next($request);
+            // Perform action
+            return $response;
+        }
+    }
 
 #### 2.2. Where are they defined?
 They are defined in files that have to be put inside of a folder called _Middleware_. And to be able to use it, it's necessary to put it inside of the _Kernel.php_ file.
@@ -55,8 +78,24 @@ They are defined in files that have to be put inside of a folder called _Middlew
 There are 10 in total.
 
 #### 2.4. Which parameters do they use?
+The parameter that is being used is:
+
+Route::middleware<code>('year')</code>->group(function() { ... }
+
+Which is the name that has been put in the _Kernel.php_:
+
+    protected $routeMiddleware = [
+        // ...
+        'year' => \App\Http\Middleware\ValidateYear::class
+    ];
 
 #### 2.5. When are they invoked?
+They are invoked on [HTTP requests](https://laravel.com/docs/10.x/middleware#registering-middleware). 
+
+- They can be assigned to routes
+- Be a global middleware
+- Create middleware groups
+- It's also possible to exclude a middleware
 
 * * *
 
@@ -88,8 +127,8 @@ They are in the _\resources\views_ folder, usually they are files with the sufix
 
 #### 5.3. How many are there?
 There are 2 views, right now:
-- welcome.blade.php
-- list.blade.php
+- _welcome.blade.php_
+- _list.blade.php_
 
 * * *
 
