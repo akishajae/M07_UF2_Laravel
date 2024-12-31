@@ -101,13 +101,27 @@ They are invoked on [HTTP requests](https://laravel.com/docs/10.x/middleware#reg
 
 ### 3. Data
 #### 3.1. Where are they defined?
+Initially it's defined in _storage\app\public\films.json_.
 
 #### 3.2. How are they read?
+In the _FilmController.php_, using this function:
+
+    /**
+     * Read films from storage
+     */
+    public static function readFilms(): array
+    {
+        $films = Storage::json('/public/films.json');
+        return $films;
+    }
 
 * * *
 
 ### 4. Controller
 #### 4.1. What are they and their purpose?
+Controllers are classes where it lets organize and group related request handling logic. 
+
+Instead of defining all the request handling logic in the route files: with these controller classes you can have an organized and cleaner structure.
 
 #### 4.2. Where are they defined?
 They are in the _Controllers_ folder.
@@ -121,9 +135,12 @@ There are 2 controllers:
 
 ### 5. View
 #### 5.1. What are they and their purpose?
+Views are files that present data to the browser. In Laravel, views provide a way to place HTML in different files, it separates the controller logic from the presentation logic.
+
+It's useful, since we don't have to put an entire HTML document strings in the routes and controllers files, it's more organized.
 
 #### 5.2. Where are they defined?
-They are in the _\resources\views_ folder, usually they are files with the sufix _blade.php_.
+They are in the _\resources\views_ folder, usually they are files with the sufix _blade.php_, therefore it uses Blade templating language.
 
 #### 5.3. How many are there?
 There are 2 views, right now:
