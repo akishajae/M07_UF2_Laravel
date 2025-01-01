@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Http\Request;
+use App\Models\Film;
 
 class FilmController extends Controller
 {
@@ -10,9 +12,10 @@ class FilmController extends Controller
     /**
      * Read films from storage
      */
-    public static function readFilms(): array
+    public static function readFilms()
     {
-        $films = Storage::json('/public/films.json');
+        // $films = Storage::json('/public/films.json');
+        $films = Film::all();
         return $films;
     }
     /**
@@ -30,7 +33,7 @@ class FilmController extends Controller
 
         foreach ($films as $film) {
             //foreach ($this->datasource as $film) {
-            if ($film['year'] < $year)
+            if ($film->year < $year)
                 $old_films[] = $film;
         }
         return view('films.list', ["films" => $old_films, "title" => $title]);
@@ -144,11 +147,13 @@ class FilmController extends Controller
         $title = "Listado de todas las pelis ordenadas por año";
         $films = FilmController::readFilms();
 
-        usort($films, function ($a, $b) {
+        $films_array = $films->toArray();
+
+        usort($films_array, function ($a, $b) {
             return $b['year'] - $a['year'];
         });
 
-        foreach ($films as $film) {
+        foreach ($films_array as $film) {
             $films_filtered[] = $film;
         }
 
@@ -161,20 +166,44 @@ class FilmController extends Controller
      */
     public function countFilms()
     {
-        $countFilms = 0;
+        $count_films = 0;
 
         $title = "Contador de pelis";
         $films = FilmController::readFilms();
 
         foreach ($films as $film) {
-            $countFilms++;
+            $count_films++;
         }
 
-        return view("films.counter", ["films" => $films, "countFilms" => $countFilms, "title" => $title]);
+        return view("films.counter", ["films" => $films, "countFilms" => $count_films, "title" => $title]);
     }
 
-    public function createFilm() {
-        
+    public function isFilm(string $filmName)
+    {
+        return Film::where('name', $filmName)->exists();
     }
-    
+
+
+    public function createFilm(Request $request)
+    {
+        // validate data
+        $request->validate([
+            'name' => 'required',
+            'year' => 'required|integer',
+            'genre' => 'required',
+            'country' => 'required',
+            'duration' => 'required|integer'
+            // img
+        ]);
+
+        // validate if film exists
+        if (!($this->isFilm($request->name))) {
+            Film::create($request->all());
+            // to fix listFilms
+            return redirect()->route('listFilms');
+        } else {
+            // to add error message
+            return redirect()->route('welcome')->with('success', 'This film already exists.');
+        }
+    }
 }
