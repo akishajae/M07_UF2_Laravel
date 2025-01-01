@@ -16,12 +16,12 @@ class ValidateUrl
      */
     public function handle(Request $request, Closure $next): Response
     {
-        $url = $request->route('url');
+        $url = $request->input('img_url');
 
-        if(isset($url)){
-            if (!Str::isUrl($url)) {
-                
-            }
+        if ($url && !filter_var($url, FILTER_VALIDATE_URL)) {
+            // to add error message
+            dump('put a valid url');
+            return redirect('/');
         }
 
         return $next($request);
