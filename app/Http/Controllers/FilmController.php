@@ -183,6 +183,13 @@ class FilmController extends Controller
         return Film::where('name', $filmName)->exists();
     }
 
+    public function showList() {
+        return view('films.list');
+    }
+
+    public function showForm() {
+        return view('films.form');
+    }
 
     public function createFilm(Request $request)
     {
