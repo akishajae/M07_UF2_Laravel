@@ -1,5 +1,5 @@
 <x-layout>
-    <!-- <h1>{{ $title }}</h1> -->
+    {{-- <h1>{{ $title }}</h1> --}}
 
     <ul class="nav nav-tabs d-flex justify-content-center align-items-center m-12">
         <li class="nav-item">
@@ -23,43 +23,45 @@
     </ul>
 
     @if(empty($films))
-    <font color="red">No se ha encontrado ninguna película</font>
+        <div class="alert alert-warning alert-dismissible fade show bg-opacity-30 bg-danger text-danger m-12" role="alert">
+            <strong>Oh no!</strong> No se ha encontrado ninguna película.
+        </div>
     @else
 
-    @if (Route::currentRouteName() == 'filmsByYear')
-    
-    @elseif (Route::currentRouteName() == 'filmsByGenre')
-    
-    @endif
+        @if (Route::currentRouteName() == 'filmsByYear')
+            <p>test year</p>
+        @elseif (Route::currentRouteName() == 'filmsByGenre')
+            <p>test genre</p>
+        @endif
 
-    <div align="center" class="container my-5 table-responsive">
-        <table class="table table-striped table-bordered">
-            {{-- @foreach($films as $film)
+        <div align="center" class="container my-5 table-responsive">
+            <table class="table table-striped table-bordered">
+                {{-- @foreach($films as $film)
                 @foreach(array_keys($film) as $key)
-                    <th>{{$key}}</th>
-            @endforeach
-            @break
-            @endforeach --}}
-            <tr class="text-center">
-                <th>NOMBRE</th>
-                <th>AÑO</th>
-                <th>GÉNERO</th>
-                <th>PAÍS</th>
-                <th>DURACIÓN</th>
-                <th>PORTADA</th>
-            </tr>
+                <th>{{$key}}</th>
+                @endforeach
+                @break
+                @endforeach --}}
+                <tr class="text-center">
+                    <th>NOMBRE</th>
+                    <th>AÑO</th>
+                    <th>GÉNERO</th>
+                    <th>PAÍS</th>
+                    <th>DURACIÓN</th>
+                    <th>PORTADA</th>
+                </tr>
 
-            @foreach($films as $film)
-            <tr>
-                <td class="text-center">{{$film['name']}}</td>
-                <td class="text-center">{{$film['year']}}</td>
-                <td class="text-center">{{$film['genre']}}</td>
-                <td class="text-center">{{$film['country']}}</td>
-                <td class="text-center">{{$film['duration']}}</td>
-                <td class="text-center"><img src={{$film['img_url']}} style="width: 100px; height: 120px;" /></td>
-            </tr>
-            @endforeach
-        </table>
-    </div>
+                @foreach($films as $film)
+                    <tr>
+                        <td class="text-center">{{$film['name']}}</td>
+                        <td class="text-center">{{$film['year']}}</td>
+                        <td class="text-center">{{$film['genre']}}</td>
+                        <td class="text-center">{{$film['country']}}</td>
+                        <td class="text-center">{{$film['duration']}}</td>
+                        <td class="text-center"><img src={{$film['img_url']}} style="width: 100px; height: 120px;" /></td>
+                    </tr>
+                @endforeach
+            </table>
+        </div>
     @endif
 </x-layout>
