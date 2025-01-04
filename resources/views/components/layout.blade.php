@@ -37,14 +37,14 @@
           <!-- Nav -->
           <div class="navbar-nav mx-lg-auto">
             <a class="nav-item nav-link rounded m-2 py-2 {{ Route::currentRouteName() == 'welcome' ? 'active' : '' }}" href="{{ route('welcome') }}">Principal</a>
-            <a class="nav-item nav-link rounded m-2 py-2 {{ Route::currentRouteName() == 'listFilms' ? 'active' : '' }}" href="{{ route('listFilms') }}">Listas</a>
+            <a class="nav-item nav-link rounded m-2 py-2 {{ Route::currentRouteName() == 'viewList' ? 'active' : '' }}" href="{{ route('viewList') }}">Listas</a>
             <a class="nav-item nav-link rounded m-2 py-2 {{ Route::currentRouteName() == 'countFilms' ? 'active' : '' }}" href="{{ route('countFilms') }}">Contador</a>
           </div>
           <!-- Right navigation -->
           <div class="navbar-nav ms-lg-4"></div>
           <!-- Action -->
           <div class="d-flex align-items-lg-center mt-3 mt-lg-0">
-            <a href="{{ route('formFilm') }}" class="btn btn-sm btn-danger w-full w-lg-auto">Añadir película</a>
+            <a href="{{ route('viewForm') }}" class="btn btn-sm btn-danger w-full w-lg-auto">Añadir película</a>
           </div>
         </div>
       </div>

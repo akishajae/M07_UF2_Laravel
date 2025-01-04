@@ -35,12 +35,18 @@ Route::middleware('year')->group(function () {
 
         // new route 'countFilms'
         Route::get('countFilms', [FilmController::class, "countFilms"])->name('countFilms');
+
+        // show list
+        Route::get('list', [FilmController::class, "showList"])->name('viewList');
     });
 });
 
 Route::middleware('url')->group(function() {
     Route::group(['prefix' => 'filmin'], function() {
-        Route::get('form', [FilmController::class, "formFilm"])->name('formFilm');
+        // view form
+        Route::get('form', [FilmController::class, "viewForm"])->name('viewForm');
+
+        // create film
         Route::post('createFilm', [FilmController::class, "createFilm"])->name('createFilm');
     });
 });
