@@ -27,8 +27,10 @@ Route::middleware('year')->group(function () {
         Route::get('films', [FilmController::class, "listFilms"])->name('listFilms');
 
         // split in two new routes
-        Route::get('filmsByYear/{year?}', [FilmController::class, "listFilmsByYear"])->name('filmsByYear');
+        Route::get('filmsByYear', [FilmController::class, "listFilmsByYear"])->name('filmsByYear');
+        Route::post('filmsByYear/{year?}', [FilmController::class, "listFilmsByYear"])->name('filmsByYear');
         Route::get('filmsByGenre/{genre?}', [FilmController::class, "listFilmsByGenre"])->name('filmsByGenre');
+        Route::post('filmsByGenre/{genre?}', [FilmController::class, "listFilmsByGenre"])->name('filmsByGenre');
 
         // new route 'sortFilms'
         Route::get('sortFilms', [FilmController::class, "sortFilms"])->name('sortFilms');
@@ -44,7 +46,7 @@ Route::middleware('year')->group(function () {
 Route::middleware('url')->group(function() {
     Route::group(['prefix' => 'filmin'], function() {
         // view form
-        Route::get('form', [FilmController::class, "viewForm"])->name('viewForm');
+        Route::get('form', [FilmController::class, "showForm"])->name('viewForm');
 
         // create film
         Route::post('createFilm', [FilmController::class, "createFilm"])->name('createFilm');

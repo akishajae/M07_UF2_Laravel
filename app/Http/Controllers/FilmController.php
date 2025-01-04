@@ -28,7 +28,7 @@ class FilmController extends Controller
         if (is_null($year))
             $year = 2000;
 
-        $title = "Listado de Pelis Antiguas (Antes de $year)";
+        $title = "Colección de películas antiguas (antes de $year)";
         $films = FilmController::readFilms();
 
         foreach ($films as $film) {
@@ -48,7 +48,7 @@ class FilmController extends Controller
         if (is_null($year))
             $year = 2000;
 
-        $title = "Listado de Pelis Nuevas (Después de $year)";
+        $title = "Colección de películas nuevas (después de $year)";
         $films = FilmController::readFilms();
 
         foreach ($films as $film) {
@@ -64,7 +64,7 @@ class FilmController extends Controller
     {
         $films_filtered = [];
 
-        $title = "Listado de todas las pelis";
+        $title = "Colección de todas las películas";
         $films = FilmController::readFilms();
 
         //if year and genre are null
@@ -88,11 +88,13 @@ class FilmController extends Controller
      * @param mixed $year
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
-    public function listFilmsByYear($year = null)
+    public function listFilmsByYear(Request $request)
     {
         $films_filtered = [];
 
-        $title = "Listado de todas las pelis filtradas por año";
+        $year = $request->input('year');
+
+        $title = "Colección de todas las películas filtradas por año de estreno";
         $films = FilmController::readFilms();
 
         //if year is null
@@ -115,11 +117,13 @@ class FilmController extends Controller
      * @param mixed $genre
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
-    public function listFilmsByGenre($genre = null)
+    public function listFilmsByGenre(Request $request)
     {
         $films_filtered = [];
 
-        $title = "Listado de todas las pelis filtradas por género";
+        $genre = $request->input('genre');
+
+        $title = "Colección de todas las películas filtradas por género cinematográfico";
         $films = FilmController::readFilms();
 
         //if genre is null
@@ -144,7 +148,7 @@ class FilmController extends Controller
     {
         $films_filtered = [];
 
-        $title = "Listado de todas las pelis ordenadas por año";
+        $title = "Colección de todas las películas ordenadas por año";
         $films = FilmController::readFilms();
 
         $films_array = $films->toArray();
@@ -168,7 +172,7 @@ class FilmController extends Controller
     {
         $count_films = 0;
 
-        $title = "Contador de pelis";
+        $title = "Galería de películas";
         $films = FilmController::readFilms();
 
         foreach ($films as $film) {
