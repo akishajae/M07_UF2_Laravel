@@ -10,7 +10,12 @@
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
   <link href="https://unpkg.com/@webpixels/css@1.2.6/dist/index.css" rel="stylesheet">
 
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Gloock&display=swap" rel="stylesheet">
+
   <!-- Include any additional stylesheets or scripts here -->
+   
 </head>
 
 <body class="d-flex flex-column min-vh-100">
@@ -21,7 +26,7 @@
         <!-- Logo -->
         <a class="navbar-brand" href="#">
           <!-- <img src="https://preview.webpixels.io/web/img/logos/clever-light.svg" class="h-8" alt="..."> -->
-          <img src="" class="h-8" alt="...">
+          <img src="{{ asset('img/films-logo.png') }}" class="h-8" alt="...">
         </a>
         <!-- Navbar toggle -->
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
@@ -34,7 +39,7 @@
             <a class="nav-item nav-link rounded m-2 py-2 {{ Route::currentRouteName() == 'welcome' ? 'active' : '' }}" href="{{ route('welcome') }}">Principal</a>
             <a class="nav-item nav-link rounded m-2 py-2 {{ Route::currentRouteName() == 'listFilms' ? 'active' : '' }}" href="{{ route('listFilms') }}">Listas</a>
             <a class="nav-item nav-link rounded m-2 py-2 {{ Route::currentRouteName() == 'countFilms' ? 'active' : '' }}" href="{{ route('countFilms') }}">Contador</a>
-          </div> 
+          </div>
           <!-- Right navigation -->
           <div class="navbar-nav ms-lg-4"></div>
           <!-- Action -->
@@ -47,24 +52,32 @@
   </header>
 
   {{ $slot }}
-
-  <footer class="mt-auto bg-dark text-center text-white">
-    <!-- Grid container -->
-    <div class="container p-4 pb-0">
-      <!-- Section: Social media -->
-      <section class="mb-4">
-      </section>
-      <!-- Section: Social media -->
-    </div>
-    <!-- Grid container -->
-
-    <!-- Copyright -->
-    <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
+  
+  <footer>
+    <img src="{{ asset('img/cinema-seats.png') }}" alt="" class="mt-auto">
+    <div class="text-center p-3 bg-dark">
       © 2025 Copyright
       <a class="text-white" href="#">Films, Akisha Angeles</a>
     </div>
-    <!-- Copyright -->
   </footer>
+
+  <!-- <footer class="mt-auto bg-dark text-center text-white"> -->
+    <!-- Grid container -->
+    <!-- <div class="container p-4 pb-0"> -->
+      <!-- Section: Social media -->
+      <!-- <section class="mb-4">
+      </section> -->
+      <!-- Section: Social media -->
+    <!-- </div> -->
+    <!-- Grid container -->
+
+    <!-- Copyright -->
+    <!-- <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
+      © 2025 Copyright
+      <a class="text-white" href="#">Films, Akisha Angeles</a>
+    </div> -->
+    <!-- Copyright -->
+  <!-- </footer> -->
 
 </body>
 

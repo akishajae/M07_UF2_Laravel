@@ -40,13 +40,13 @@
             @endforeach
             @break
             @endforeach --}}
-            <tr class="text-center">
-                <th>NOMBRE</th>
-                <th>AÑO</th>
-                <th>GÉNERO</th>
-                <th>PAÍS</th>
-                <th>DURACIÓN</th>
-                <th>PORTADA</th>
+            <tr style="font-family: 'Gloock', serif;" class="text-center">
+                <th class="text-dark font-weight-bold text-uppercase">Nombre</th>
+                <th class="text-dark font-weight-bold text-uppercase">Año</th>
+                <th class="text-dark font-weight-bold text-uppercase">Género</th>
+                <th class="text-dark font-weight-bold text-uppercase">País</th>
+                <th class="text-dark font-weight-bold text-uppercase">Duración</th>
+                <th class="text-dark font-weight-bold text-uppercase">Portada</th>
             </tr>
 
             @foreach($films as $film)
