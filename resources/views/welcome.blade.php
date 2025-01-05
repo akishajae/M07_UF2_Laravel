@@ -30,7 +30,7 @@
                             <a href="{{ route('listFilms') }}" class="btn btn-lg btn-danger shadow-sm mx-2 px-lg-8">
                                 Ve al listado
                             </a>
-                            <a href="{{ route('formFilm') }}" class="btn btn-lg btn-neutral mx-2 px-lg-8">
+                            <a href="{{ route('viewForm') }}" class="btn btn-lg btn-neutral mx-2 px-lg-8">
                                 Añade tu película
                             </a>
                         </div>
