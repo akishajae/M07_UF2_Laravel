@@ -41,7 +41,7 @@
                             <span class="d-none d-lg-block position-absolute top-0 start-0 transform translate-x-n32 translate-y-n16 w-2/3 h-2/3 bg-warning opacity-20 rounded-circle filter blur-50"></span>
                             <span class="d-none d-xl-block position-absolute bottom-0 end-0 transform translate-x-16 translate-y-16 w-32 h-32 bg-warning opacity-60 rounded-circle filter blur-50"></span>
                             <!-- Image -->
-                            <img alt="..." src="{{ asset('img/cinema-film.jpg') }}" class="rounded img-fluid" />
+                            <img alt="Cinema Film" src="{{ asset('img/cinema-film.jpg') }}" class="rounded img-fluid" />
                         </div>
                     </div>
                 </div>

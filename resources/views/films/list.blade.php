@@ -26,7 +26,7 @@
     <div class="d-flex align-items-center mx-lg-auto">
         <form method="POST" action="{{ route('filmsByYear') }}" class="d-flex w-100">
             @csrf
-            <input type="text" name="year" id="year" class="form-control mb-3 mr-2" placeholder="Introduce un año">
+            <input type="number" name="year" id="year" class="form-control mb-3 mr-2" placeholder="Introduce un año">
             <button type="submit" class="btn btn-sm btn-danger mb-3">Filtrar</button>
         </form>
     </div>
@@ -65,7 +65,7 @@
                 <td class="text-center">{{$film['country']}}</td>
                 <td class="text-center">{{$film['duration']}}'</td>
                 <td class="text-center">
-                    <img src="{{$film['img_url']}}" class="img-fluid" style="max-width: 150px; max-height: 225px; object-fit: cover;" />
+                    <img src="{{$film['img_url']}}" alt="Film Covers" class="img-fluid" style="max-width: 150px; max-height: 225px; object-fit: cover;" />
                 </td>
             </tr>
             @endforeach

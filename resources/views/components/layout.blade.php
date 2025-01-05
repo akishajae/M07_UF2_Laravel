@@ -32,7 +32,7 @@
         <!-- Logo -->
         <a class="navbar-brand" href="{{ route('welcome') }}">
           <!-- <img src="https://preview.webpixels.io/web/img/logos/clever-light.svg" class="h-8" alt="..."> -->
-          <img src="{{ asset('img/films-logo.png') }}" class="h-8" alt="...">
+          <img src="{{ asset('img/films-logo.png') }}" class="h-8" alt="Films Logo">
         </a>
         <!-- Navbar toggle -->
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
@@ -70,7 +70,7 @@
   {{ $slot }}
 
   <footer>
-    <img src="{{ asset('img/cinema-seats.png') }}" alt="" class="footer-image mt-auto">
+    <img src="{{ asset('img/cinema-seats.png') }}" alt="Seats Decoration" class="footer-image mt-auto">
     <div class="text-center p-3 bg-dark">
       © 2025 Copyright
       <a class="text-white" href="#">Films, Akisha Angeles</a>
