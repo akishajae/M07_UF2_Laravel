@@ -15,7 +15,13 @@
   <link href="https://fonts.googleapis.com/css2?family=Gloock&display=swap" rel="stylesheet">
 
   <!-- Include any additional stylesheets or scripts here -->
-   
+  <style>
+    .footer-image {
+      width: 100%;
+      max-width: 100vw;
+      height: auto;
+    }
+  </style>
 </head>
 
 <body class="d-flex flex-column min-vh-100">
@@ -24,7 +30,7 @@
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark px-0 py-3">
       <div class="container-xl">
         <!-- Logo -->
-        <a class="navbar-brand" href="#">
+        <a class="navbar-brand" href="{{ route('welcome') }}">
           <!-- <img src="https://preview.webpixels.io/web/img/logos/clever-light.svg" class="h-8" alt="..."> -->
           <img src="{{ asset('img/films-logo.png') }}" class="h-8" alt="...">
         </a>
@@ -37,7 +43,17 @@
           <!-- Nav -->
           <div class="navbar-nav mx-lg-auto">
             <a class="nav-item nav-link rounded m-2 py-2 {{ Route::currentRouteName() == 'welcome' ? 'active' : '' }}" href="{{ route('welcome') }}">Principal</a>
-            <a class="nav-item nav-link rounded m-2 py-2 {{ Route::currentRouteName() == 'viewList' ? 'active' : '' }}" href="{{ route('viewList') }}">Listas</a>
+            <a class="nav-item nav-link rounded m-2 py-2 
+            @switch (Route::currentRouteName())
+              @case ('listFilms')
+              @case ('oldFilms')
+              @case ('newFilms')
+              @case ('sortFilms')
+              @case ('filmsByYear')
+              @case ('filmsByGenre')
+              active
+            @endswitch
+            " href="{{ route('listFilms') }}">Listas</a>
             <a class="nav-item nav-link rounded m-2 py-2 {{ Route::currentRouteName() == 'countFilms' ? 'active' : '' }}" href="{{ route('countFilms') }}">Contador</a>
           </div>
           <!-- Right navigation -->
@@ -52,9 +68,9 @@
   </header>
 
   {{ $slot }}
-  
+
   <footer>
-    <img src="{{ asset('img/cinema-seats.png') }}" alt="" class="mt-auto">
+    <img src="{{ asset('img/cinema-seats.png') }}" alt="" class="footer-image mt-auto">
     <div class="text-center p-3 bg-dark">
       © 2025 Copyright
       <a class="text-white" href="#">Films, Akisha Angeles</a>
@@ -62,21 +78,21 @@
   </footer>
 
   <!-- <footer class="mt-auto bg-dark text-center text-white"> -->
-    <!-- Grid container -->
-    <!-- <div class="container p-4 pb-0"> -->
-      <!-- Section: Social media -->
-      <!-- <section class="mb-4">
+  <!-- Grid container -->
+  <!-- <div class="container p-4 pb-0"> -->
+  <!-- Section: Social media -->
+  <!-- <section class="mb-4">
       </section> -->
-      <!-- Section: Social media -->
-    <!-- </div> -->
-    <!-- Grid container -->
+  <!-- Section: Social media -->
+  <!-- </div> -->
+  <!-- Grid container -->
 
-    <!-- Copyright -->
-    <!-- <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
+  <!-- Copyright -->
+  <!-- <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
       © 2025 Copyright
       <a class="text-white" href="#">Films, Akisha Angeles</a>
     </div> -->
-    <!-- Copyright -->
+  <!-- Copyright -->
   <!-- </footer> -->
 
 </body>
