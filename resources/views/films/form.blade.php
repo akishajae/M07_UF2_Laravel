@@ -3,8 +3,8 @@
     <div class="d-flex justify-content-center align-items-center vh-100">
         <!-- Card with w-50 for width and p-3 for padding -->
         <div class="card w-50 p-3">
+            <h1 class="mx-lg-auto mt-3 text-danger" style="font-family: 'Gloock', serif">Añade tu película</h1>
             <div class="card-body">
-                <h3 class="h4">Datos de la película</h3>
                 <form method="POST" action="{{ route('createFilm') }}">
                     @csrf
                     <div class="mb-5">

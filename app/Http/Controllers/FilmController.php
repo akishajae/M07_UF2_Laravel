@@ -97,9 +97,14 @@ class FilmController extends Controller
         $title = "Colección de todas las películas filtradas por año de estreno";
         $films = FilmController::readFilms();
 
-        //if year is null
-        if (is_null($year)) {
-            return view('films.list', ["films" => $films, "title" => $title]);
+        // if films is empty
+        if ($films->isEmpty()) {
+            return view('films.list', ["films" => $films_filtered, "title" => $title]);
+        } else {
+            //if year is null
+            if (is_null($year)) {
+                return view('films.list', ["films" => $films, "title" => $title]);
+            }
         }
 
         //list based on year informed
@@ -126,10 +131,16 @@ class FilmController extends Controller
         $title = "Colección de todas las películas filtradas por género cinematográfico";
         $films = FilmController::readFilms();
 
-        //if genre is null
-        if (is_null($genre)) {
-            return view('films.list', ["films" => $films, "title" => $title]);
+        // if films is empty
+        if ($films->isEmpty()) {
+            return view('films.list', ["films" => $films_filtered, "title" => $title]);
+        } else {
+            //if genre is null
+            if (is_null($genre)) {
+                return view('films.list', ["films" => $films, "title" => $title]);
+            }
         }
+
 
         //list based on genre informed
         foreach ($films as $film) {
@@ -137,6 +148,7 @@ class FilmController extends Controller
                 $films_filtered[] = $film;
             }
         }
+
         return view("films.list", ["films" => $films_filtered, "title" => $title]);
     }
 
@@ -187,11 +199,13 @@ class FilmController extends Controller
         return Film::where('name', $filmName)->exists();
     }
 
-    public function showList() {
+    public function showList()
+    {
         return view('films.list');
     }
 
-    public function showForm() {
+    public function showForm()
+    {
         return view('films.form');
     }
 

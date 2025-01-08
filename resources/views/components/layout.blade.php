@@ -69,31 +69,13 @@
 
   {{ $slot }}
 
-  <footer>
+  <footer class="mt-auto">
     <img src="{{ asset('img/cinema-seats.png') }}" alt="Seats Decoration" class="footer-image mt-auto">
     <div class="text-center p-3 bg-dark">
       © 2025 Copyright
       <a class="text-white" href="#">Films, Akisha Angeles</a>
     </div>
   </footer>
-
-  <!-- <footer class="mt-auto bg-dark text-center text-white"> -->
-  <!-- Grid container -->
-  <!-- <div class="container p-4 pb-0"> -->
-  <!-- Section: Social media -->
-  <!-- <section class="mb-4">
-      </section> -->
-  <!-- Section: Social media -->
-  <!-- </div> -->
-  <!-- Grid container -->
-
-  <!-- Copyright -->
-  <!-- <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
-      © 2025 Copyright
-      <a class="text-white" href="#">Films, Akisha Angeles</a>
-    </div> -->
-  <!-- Copyright -->
-  <!-- </footer> -->
 
 </body>
 

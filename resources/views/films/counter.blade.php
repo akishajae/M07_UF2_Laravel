@@ -13,7 +13,7 @@
                 <div class="col-lg-7">
                     <!-- Films counter -->
                     <h2 class="ls-tight font-bolder mb-5">
-                        Hay un total de {{ $countFilms }} películas.
+                        Hay un total de <span class="text-danger">{{ $countFilms }}</span> películas.
                     </h2>
                 </div>
             </div>
