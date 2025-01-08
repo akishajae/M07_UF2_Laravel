@@ -25,37 +25,29 @@ class FilmController extends Controller
      */
     public function listOldFilms($year = null)
     {
-        $old_films = [];
         if (is_null($year))
             $year = 2000;
 
         $title = "Colección de películas antiguas (antes de $year)";
-        $films = FilmController::readFilms();
 
-        foreach ($films as $film) {
-            //foreach ($this->datasource as $film) {
-            if ($film->year < $year)
-                $old_films[] = $film;
-        }
+        $old_films = Film::where('year', '<', $year)->get();
+
         return view('films.list', ["films" => $old_films, "title" => $title]);
     }
+
     /**
      * List films younger than input year
      * if year is not infomed 2000 year will be used as criteria
      */
     public function listNewFilms($year = null)
     {
-        $new_films = [];
         if (is_null($year))
             $year = 2000;
 
         $title = "Colección de películas nuevas (después de $year)";
-        $films = FilmController::readFilms();
 
-        foreach ($films as $film) {
-            if ($film['year'] >= $year)
-                $new_films[] = $film;
-        }
+        $new_films = Film::where('year', '>=', $year)->get();
+
         return view('films.list', ["films" => $new_films, "title" => $title]);
     }
     /**
@@ -63,25 +55,24 @@ class FilmController extends Controller
      */
     public function listFilms()
     {
-        $films_filtered = [];
-
         $title = "Colección de todas las películas";
         $films = FilmController::readFilms();
 
+        return view("films.list", ["films" => $films, "title" => $title]);
+       
         //if year and genre are null
-        if (is_null($films))
-            return view('films.list', ["films" => $films, "title" => $title]);
+        // if (is_null($films))
+        //     return view('films.list', ["films" => $films, "title" => $title]);
 
         //list based on year or genre informed
-        foreach ($films as $film) {
-            $films_filtered[] = $film;
+        // foreach ($films as $film) {
+        //     $films_filtered[] = $film;
 
-            // if (!is_null($year) && !is_null($genre) && strtolower($film['genre']) == strtolower($genre) && $film['year'] == $year) {
-            //     $title = "Listado de todas las pelis filtrado x categoria y año";
-            //     $films_filtered[] = $film;
-            // }
-        }
-        return view("films.list", ["films" => $films_filtered, "title" => $title]);
+        //     // if (!is_null($year) && !is_null($genre) && strtolower($film['genre']) == strtolower($genre) && $film['year'] == $year) {
+        //     //     $title = "Listado de todas las pelis filtrado x categoria y año";
+        //     //     $films_filtered[] = $film;
+        //     // }
+        // }
     }
 
     /**
@@ -159,20 +150,9 @@ class FilmController extends Controller
      */
     public function sortFilms()
     {
-        $films_filtered = [];
+        $films_filtered = Film::orderByDesc('year')->get();
 
         $title = "Colección de todas las películas ordenadas por año";
-        $films = FilmController::readFilms();
-
-        $films_array = $films->toArray();
-
-        usort($films_array, function ($a, $b) {
-            return $b['year'] - $a['year'];
-        });
-
-        foreach ($films_array as $film) {
-            $films_filtered[] = $film;
-        }
 
         return view("films.list", ["films" => $films_filtered, "title" => $title]);
     }
@@ -183,14 +163,10 @@ class FilmController extends Controller
      */
     public function countFilms()
     {
-        $count_films = 0;
+        $count_films = Film::count();
 
         $title = "Galería de películas";
         $films = FilmController::readFilms();
-
-        foreach ($films as $film) {
-            $count_films++;
-        }
 
         return view("films.counter", ["films" => $films, "countFilms" => $count_films, "title" => $title]);
     }
