@@ -4,7 +4,7 @@
         <strong>Oh no!</strong> No se ha encontrado ninguna película.
     </div>
     @else
-    <h1 class="mx-lg-auto mt-10 text-danger" style="font-family: 'Gloock', serif">{{ $title }}</h1>
+    <h1 class="mx-auto mt-10 text-danger" style="font-family: 'Gloock', serif">{{ $title }}</h1>
 
     <div class=" pt-12 pb-24 py-24">
         <div class="container max-w-screen-xl">

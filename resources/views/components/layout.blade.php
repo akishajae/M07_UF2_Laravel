@@ -35,7 +35,7 @@
           <img src="{{ asset('img/films-logo.png') }}" class="h-8" alt="Films Logo">
         </a>
         <!-- Navbar toggle -->
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
         <!-- Collapse -->
@@ -76,6 +76,11 @@
       <a class="text-white" href="#">Films, Akisha Angeles</a>
     </div>
   </footer>
+
+  <!-- Add jQuery and Bootstrap JS at the end of the body for better performance -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 
 </body>
 
