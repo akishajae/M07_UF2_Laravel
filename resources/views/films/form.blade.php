@@ -10,6 +10,9 @@
                     <div class="mb-5">
                         <label class="form-label" for="name">Nombre</label>
                         <input type="text" class="form-control" id="name" name="name">
+                        @if (session('error'))
+                            <p class="text-danger mt-2">{{ session('error') }}</p>
+                        @endif
                     </div>
                     <div class="mb-5">
                         <label class="form-label" for="year">Año</label>

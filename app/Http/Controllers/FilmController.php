@@ -224,11 +224,12 @@ class FilmController extends Controller
         // validate if film exists
         if (!($this->isFilm($request->name))) {
             Film::create($request->all());
-            // to fix listFilms
-            return redirect()->route('listFilms');
+            return redirect()->route('listFilms')->with('success', 'Tu película ha sido añadida.');;
         } else {
-            // to add error message
-            return redirect()->route('welcome')->with('success', 'This film already exists.');
+            return redirect()->route('viewForm')->with('error', 'Ya hay una película con este título.');
+
+            // It was more convenient to have the error in the form, not in the welcome page
+            // return redirect()->route('welcome')->with('error', 'This film already exists.');
         }
     }
 }

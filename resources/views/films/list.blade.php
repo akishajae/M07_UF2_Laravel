@@ -22,6 +22,12 @@
         </li>
     </ul>
 
+    @if (session('success'))
+        <div class="alert alert-success alert-dismissible fade show bg-opacity-30 bg-success text-success m-12" role="alert">
+            <strong>Yay!</strong> {{ session('success') }}
+        </div>
+    @endif
+
     @if (Route::currentRouteName() == 'filmsByYear')
         <div class="d-flex align-items-center mx-lg-auto">
             <form method="POST" action="{{ route('filmsByYear') }}" class="d-flex w-100">

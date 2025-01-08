@@ -7,10 +7,6 @@
 
         <!-- Include any additional HTML or Blade directives here -->
 
-        @if (session('success'))
-        <p>{{ session('success') }}</p>
-        @endif
-
         <div class="py-24">
             <div class="container max-w-screen-xl">
                 <div class="row align-items-center">
@@ -23,7 +19,7 @@
                         </h1>
                         <!-- Text -->
                         <p class="lead mb-10">
-                            ... o añádela a la colección.
+                            ... o añádela a La colección.
                         </p>
                         <!-- Buttons -->
                         <div class="mx-n2">
