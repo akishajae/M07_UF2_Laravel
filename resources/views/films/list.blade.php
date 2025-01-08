@@ -1,5 +1,5 @@
 <x-layout>
-    <h1 class="mx-lg-auto mt-10 text-danger" style="font-family: 'Gloock', serif">{{ $title }}</h1>
+    <h1 class="mx-auto mt-10 text-danger" style="font-family: 'Gloock', serif">{{ $title }}</h1>
 
     <ul class="nav nav-tabs d-flex justify-content-center align-items-center m-12">
         <li class="nav-item">
