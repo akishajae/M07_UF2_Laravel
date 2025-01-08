@@ -28,7 +28,7 @@ class FilmController extends Controller
         if (is_null($year))
             $year = 2000;
 
-        $title = "Listado de Pelis Antiguas (Antes de $year)";
+        $title = "Colección de películas antiguas (antes de $year)";
         $films = FilmController::readFilms();
 
         foreach ($films as $film) {
@@ -48,7 +48,7 @@ class FilmController extends Controller
         if (is_null($year))
             $year = 2000;
 
-        $title = "Listado de Pelis Nuevas (Después de $year)";
+        $title = "Colección de películas nuevas (después de $year)";
         $films = FilmController::readFilms();
 
         foreach ($films as $film) {
@@ -64,7 +64,7 @@ class FilmController extends Controller
     {
         $films_filtered = [];
 
-        $title = "Listado de todas las pelis";
+        $title = "Colección de todas las películas";
         $films = FilmController::readFilms();
 
         //if year and genre are null
@@ -88,16 +88,23 @@ class FilmController extends Controller
      * @param mixed $year
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
-    public function listFilmsByYear($year = null)
+    public function listFilmsByYear(Request $request)
     {
         $films_filtered = [];
 
-        $title = "Listado de todas las pelis filtradas por año";
+        $year = $request->input('year');
+
+        $title = "Colección de todas las películas filtradas por año de estreno";
         $films = FilmController::readFilms();
 
-        //if year is null
-        if (is_null($year)) {
-            return view('films.list', ["films" => $films, "title" => $title]);
+        // if films is empty
+        if ($films->isEmpty()) {
+            return view('films.list', ["films" => $films_filtered, "title" => $title]);
+        } else {
+            //if year is null
+            if (is_null($year)) {
+                return view('films.list', ["films" => $films, "title" => $title]);
+            }
         }
 
         //list based on year informed
@@ -115,17 +122,25 @@ class FilmController extends Controller
      * @param mixed $genre
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
-    public function listFilmsByGenre($genre = null)
+    public function listFilmsByGenre(Request $request)
     {
         $films_filtered = [];
 
-        $title = "Listado de todas las pelis filtradas por género";
+        $genre = $request->input('genre');
+
+        $title = "Colección de todas las películas filtradas por género cinematográfico";
         $films = FilmController::readFilms();
 
-        //if genre is null
-        if (is_null($genre)) {
-            return view('films.list', ["films" => $films, "title" => $title]);
+        // if films is empty
+        if ($films->isEmpty()) {
+            return view('films.list', ["films" => $films_filtered, "title" => $title]);
+        } else {
+            //if genre is null
+            if (is_null($genre)) {
+                return view('films.list', ["films" => $films, "title" => $title]);
+            }
         }
+
 
         //list based on genre informed
         foreach ($films as $film) {
@@ -133,6 +148,7 @@ class FilmController extends Controller
                 $films_filtered[] = $film;
             }
         }
+
         return view("films.list", ["films" => $films_filtered, "title" => $title]);
     }
 
@@ -144,7 +160,7 @@ class FilmController extends Controller
     {
         $films_filtered = [];
 
-        $title = "Listado de todas las pelis ordenadas por año";
+        $title = "Colección de todas las películas ordenadas por año";
         $films = FilmController::readFilms();
 
         $films_array = $films->toArray();
@@ -168,7 +184,7 @@ class FilmController extends Controller
     {
         $count_films = 0;
 
-        $title = "Contador de pelis";
+        $title = "Galería de películas";
         $films = FilmController::readFilms();
 
         foreach ($films as $film) {
@@ -183,6 +199,15 @@ class FilmController extends Controller
         return Film::where('name', $filmName)->exists();
     }
 
+    public function showList()
+    {
+        return view('films.list');
+    }
+
+    public function showForm()
+    {
+        return view('films.form');
+    }
 
     public function createFilm(Request $request)
     {
@@ -199,11 +224,12 @@ class FilmController extends Controller
         // validate if film exists
         if (!($this->isFilm($request->name))) {
             Film::create($request->all());
-            // to fix listFilms
-            return redirect()->route('listFilms');
+            return redirect()->route('listFilms')->with('success', 'Tu película ha sido añadida.');;
         } else {
-            // to add error message
-            return redirect()->route('welcome')->with('success', 'This film already exists.');
+            return redirect()->route('viewForm')->with('error', 'Ya hay una película con este título.');
+
+            // It was more convenient to have the error in the form, not in the welcome page
+            // return redirect()->route('welcome')->with('error', 'This film already exists.');
         }
     }
 }
