@@ -19,9 +19,9 @@ class ValidateUrl
         $url = $request->input('img_url');
 
         if ($url && !filter_var($url, FILTER_VALIDATE_URL)) {
-            // to add error message
-            dump('put a valid url');
-            return redirect('/');
+            return redirect()->route('viewForm')
+                ->withInput($request->all())
+                ->with('error_url', 'La portada tiene que ser una URL válida.');
         }
 
         return $next($request);

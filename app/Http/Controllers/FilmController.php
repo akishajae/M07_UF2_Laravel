@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreFilmRequest;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
 use App\Models\Film;
@@ -209,24 +210,18 @@ class FilmController extends Controller
         return view('films.form');
     }
 
-    public function createFilm(Request $request)
+    public function createFilm(StoreFilmRequest $request)
     {
-        // validate data
-        $request->validate([
-            'name' => 'required',
-            'year' => 'required|integer',
-            'genre' => 'required',
-            'country' => 'required',
-            'duration' => 'required|integer'
-            // img
-        ]);
+        $validated = $request->validated();
 
         // validate if film exists
         if (!($this->isFilm($request->name))) {
-            Film::create($request->all());
-            return redirect()->route('listFilms')->with('success', 'Tu película ha sido añadida.');;
+            Film::create($validated);
+            return redirect()->route('listFilms')->with('success', 'Tu película ha sido añadida.');
         } else {
-            return redirect()->route('viewForm')->with('error', 'Ya hay una película con este título.');
+            return redirect()->route('viewForm')
+                ->withInput($request->all())
+                ->with('error', 'Ya hay una película con este título.');
 
             // It was more convenient to have the error in the form, not in the welcome page
             // return redirect()->route('welcome')->with('error', 'This film already exists.');
