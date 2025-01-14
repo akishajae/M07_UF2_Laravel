@@ -5,7 +5,7 @@
         <div class="card w-50 p-3">
             <h1 class="mx-auto mt-3 text-danger" style="font-family: 'Gloock', serif">Añade tu película</h1>
             <div class="card-body">
-                <form method="POST" action="{{ route('createFilm') }}">
+                <form method="POST" action="{{ route('saveFilm') }}">
                     @csrf
                     <div class="mb-5">
                         <label class="form-label" for="name">Título <span class="text-danger">*</span></label>

@@ -46,10 +46,10 @@ Route::middleware('year')->group(function () {
 Route::middleware('url')->group(function() {
     Route::group(['prefix' => 'filmin'], function() {
         // view form
-        Route::get('form', [FilmController::class, "showForm"])->name('viewForm');
+        Route::get('form/{id?}', [FilmController::class, "showForm"])->name('viewForm');
 
-        // create film
-        Route::post('createFilm', [FilmController::class, "createFilm"])->name('createFilm');
+        // create and edit film
+        Route::post('filmEditor', [FilmController::class, "saveFilm"])->name('saveFilm');
     });
 });
 
