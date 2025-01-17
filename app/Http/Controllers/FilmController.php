@@ -146,7 +146,7 @@ class FilmController extends Controller
     public function showForm($filmId = null)
     {
         if ($filmId) {
-            $film = Film::find($filmId );
+            $film = Film::find($filmId);
             return view('films.form', ['film' => $film]);
         }
 
@@ -156,7 +156,7 @@ class FilmController extends Controller
     // I use the same method to create and edit films
     public function saveFilm(StoreFilmRequest $request, $filmId = null)
     {
-        dd($filmId);
+        // dd($filmId);
         if ($filmId) {
             dd('edit');
             $film = Film::find('id', $filmId);
