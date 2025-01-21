@@ -85,7 +85,7 @@
                                 style="max-width: 150px; max-height: 225px; object-fit: cover;" />
                         </td>
                         <td class="text-center">
-                            <a href="{{ route('viewForm') }}" class="btn btn-outline-primary">
+                            <a href="{{ route('viewForm', ['id' => $film['id']]) }}" class="btn btn-outline-primary">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
                                     fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
                                     <path
