@@ -154,14 +154,34 @@ class FilmController extends Controller
     }
 
     // I use the same method to create and edit films
-    public function saveFilm(StoreFilmRequest $request, $filmId = null)
+    public function saveFilm(StoreFilmRequest $request)
     {
-        // dd($filmId);
+        $filmId = $request->query('filmId');
         if ($filmId) {
-            dd('edit');
-            $film = Film::find('id', $filmId);
+            $film = Film::find($filmId);
+
+            // validate if film is found
+            if (!$film) {
+                return redirect()->route('viewForm')
+                    ->withInput($request->all())
+                    ->with('error', 'No se ha encontrado esa película.');
+            }
+
+            // form data
+            $validated = $request->validated();
+
+            $film->name = $validated['name'];
+            $film->year = $validated['year'];
+            $film->genre = $validated['genre'];
+            $film->country = $validated['country'];
+            $film->duration = $validated['duration'];
+            $film->img_url = $validated['img_url'];
+
+            $film->save();
+
+            return redirect()->route('listFilms')->with('success', 'Tu película ha sido editada.');
+
         } else {
-            dd('create');
             $validated = $request->validated();
 
             // validate if film exists
