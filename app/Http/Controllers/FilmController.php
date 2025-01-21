@@ -104,7 +104,6 @@ class FilmController extends Controller
         }
 
         return view('films.list', ["films" => $films_filtered, "title" => $title]);
-
     }
 
     /**
@@ -144,26 +143,59 @@ class FilmController extends Controller
         return view('films.list');
     }
 
-    public function showForm()
+    public function showForm($filmId = null)
     {
+        if ($filmId) {
+            $film = Film::find($filmId);
+            return view('films.form', ['film' => $film]);
+        }
+
         return view('films.form');
     }
 
-    public function createFilm(StoreFilmRequest $request)
+    // I use the same method to create and edit films
+    public function saveFilm(StoreFilmRequest $request)
     {
-        $validated = $request->validated();
+        $filmId = $request->query('filmId');
+        if ($filmId) {
+            $film = Film::find($filmId);
 
-        // validate if film exists
-        if (!($this->isFilm($request->name))) {
-            Film::create($validated);
-            return redirect()->route('listFilms')->with('success', 'Tu película ha sido añadida.');
+            // validate if film is found
+            if (!$film) {
+                return redirect()->route('viewForm')
+                    ->withInput($request->all())
+                    ->with('error', 'No se ha encontrado esa película.');
+            }
+
+            // form data
+            $validated = $request->validated();
+
+            $film->name = $validated['name'];
+            $film->year = $validated['year'];
+            $film->genre = $validated['genre'];
+            $film->country = $validated['country'];
+            $film->duration = $validated['duration'];
+            $film->img_url = $validated['img_url'];
+
+            $film->save();
+
+            return redirect()->route('listFilms')->with('success', 'Tu película ha sido editada.');
+
         } else {
-            return redirect()->route('viewForm')
-                ->withInput($request->all())
-                ->with('error', 'Ya hay una película con este título.');
+            $validated = $request->validated();
 
-            // It was more convenient to have the error in the form, not in the welcome page
-            // return redirect()->route('welcome')->with('error', 'This film already exists.');
+            // validate if film exists
+            if (!($this->isFilm($request->name))) {
+                Film::create($validated);
+                return redirect()->route('listFilms')->with('success', 'Tu película ha sido añadida.');
+            } else {
+                return redirect()->route('viewForm')
+                    ->withInput($request->all())
+                    ->with('error', 'Ya hay una película con este título.');
+
+                // It was more convenient to have the error in the form, not in the welcome page
+                // return redirect()->route('welcome')->with('error', 'This film already exists.');
+            }
         }
     }
 }
