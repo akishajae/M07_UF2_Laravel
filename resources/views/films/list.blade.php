@@ -94,7 +94,7 @@
                                         d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z" />
                                 </svg>
                             </a>
-                            <a href="#" class="btn btn-outline-danger">
+                            <a href="{{ route('deleteFilm', ['id' => $film['id']]) }}" class="btn btn-outline-danger">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
                                     fill="currentColor" class="bi bi-trash3-fill" viewBox="0 0 16 16">
                                     <path
@@ -107,4 +107,29 @@
             </table>
         </div>
     @endif
+
+    {{-- <x-modal id="my-modal">
+        <x-slot name="title">Title</x-slot>
+        <x-slot name="body">
+            <!-- Body of the modal -->
+        </x-slot>
+        <x-slot name="footer">
+            <!-- Footer of the modal -->
+        </x-slot>
+    </x-modal> --}}
+
+    @component('components.modal', [
+        'id' => 'modal-id',
+        'class' => 'additional classes',
+    ])
+        @slot('title', 'Title')
+
+        @slot('body')
+            <!-- Body of the modal -->
+        @endslot
+
+        @slot('footer')
+            <!-- Footer of the modal -->
+        @endslot
+    @endcomponent
 </x-layout>

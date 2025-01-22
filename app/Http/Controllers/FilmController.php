@@ -180,7 +180,6 @@ class FilmController extends Controller
             $film->save();
 
             return redirect()->route('listFilms')->with('success', 'Tu película ha sido editada.');
-
         } else {
             $validated = $request->validated();
 
@@ -195,6 +194,21 @@ class FilmController extends Controller
 
                 // It was more convenient to have the error in the form, not in the welcome page
                 // return redirect()->route('welcome')->with('error', 'This film already exists.');
+            }
+        }
+    }
+
+    public function deleteFilm(StoreFilmRequest $request)
+    {
+        $filmId = $request->query('filmId');
+        if ($filmId) {
+            $film = Film::find($filmId);
+
+            // validate if film is found
+            if (!$film) {
+                return redirect()->route('viewForm')
+                    ->withInput($request->all())
+                    ->with('error', 'No se ha encontrado esa película.');
             }
         }
     }

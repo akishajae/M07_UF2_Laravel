@@ -26,6 +26,9 @@ Route::middleware('year')->group(function () {
         Route::get('newFilms/{year?}', [FilmController::class, "listNewFilms"])->name('newFilms');
         Route::get('films', [FilmController::class, "listFilms"])->name('listFilms');
 
+        // delete film
+        Route::delete('films', [FilmController::class, "deleteFilm"])->name('deleteFilm');
+
         // split in two new routes
         Route::get('filmsByYear', [FilmController::class, "listFilmsByYear"])->name('filmsByYear');
         Route::post('filmsByYear/{year?}', [FilmController::class, "listFilmsByYear"])->name('filmsByYear');
@@ -52,5 +55,3 @@ Route::middleware('url')->group(function() {
         Route::post('filmEditor', [FilmController::class, "saveFilm"])->name('saveFilm');
     });
 });
-
-// Route::post('/filmin/createFilm', [FilmController::class, "createFilm"])->name('createFilm');
