@@ -89,8 +89,12 @@ Which is the name that has been put in the _Kernel.php_:
         'year' => \App\Http\Middleware\ValidateYear::class
     ];
 
+The middleware recieves Request and Closure objects (dependency injection).
+
 #### 2.5. When are they invoked?
 They are invoked on [HTTP requests](https://laravel.com/docs/10.x/middleware#registering-middleware). 
+
+With Laravel, middlewares are invoked before or after an HTTP request.
 
 - They can be assigned to routes
 - Be a global middleware
@@ -119,7 +123,7 @@ In the _FilmController.php_, using this function:
 
 ### 4. Controller
 #### 4.1. What are they and their purpose?
-Controllers are classes where it lets organize and group related request handling logic. 
+Controllers are classes where it lets organize and group related request handling logic. It's the first one that recieves petitions and sends the data to a service.
 
 Instead of defining all the request handling logic in the route files: with these controller classes you can have an organized and cleaner structure.
 
@@ -138,6 +142,8 @@ There are 2 controllers:
 Views are files that present data to the browser. In Laravel, views provide a way to place HTML in different files, it separates the controller logic from the presentation logic.
 
 It's useful, since we don't have to put an entire HTML document strings in the routes and controllers files, it's more organized.
+
+Views show the HTML (renderization).
 
 #### 5.2. Where are they defined?
 They are in the _\resources\views_ folder, usually they are files with the sufix _blade.php_, therefore it uses Blade templating language.
