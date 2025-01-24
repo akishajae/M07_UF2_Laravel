@@ -198,17 +198,20 @@ class FilmController extends Controller
         }
     }
 
-    public function deleteFilm(StoreFilmRequest $request)
+    public function deleteFilm($filmId)
     {
-        $filmId = $request->query('filmId');
         if ($filmId) {
             $film = Film::find($filmId);
 
+            dd('delete');
+
+            $film->delete();
+            return redirect()->route('listFilms')->with('success', 'La película ha sido eliminada.');
+
             // validate if film is found
             if (!$film) {
-                return redirect()->route('viewForm')
-                    ->withInput($request->all())
-                    ->with('error', 'No se ha encontrado esa película.');
+                dd('not found');
+               
             }
         }
     }

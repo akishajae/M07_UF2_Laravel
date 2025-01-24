@@ -27,7 +27,7 @@ Route::middleware('year')->group(function () {
         Route::get('films', [FilmController::class, "listFilms"])->name('listFilms');
 
         // delete film
-        Route::delete('films', [FilmController::class, "deleteFilm"])->name('deleteFilm');
+        Route::get('films/{id}', [FilmController::class, "deleteFilm"])->name('deleteFilm');
 
         // split in two new routes
         Route::get('filmsByYear', [FilmController::class, "listFilmsByYear"])->name('filmsByYear');

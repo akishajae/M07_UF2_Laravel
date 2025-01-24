@@ -122,10 +122,10 @@
         'id' => 'modal-id',
         'class' => 'additional classes',
     ])
-        @slot('title', 'Title')
+        @slot('title', 'Delete film')
 
         @slot('body')
-            <!-- Body of the modal -->
+            <p>Are you sure you want to delete this film?</p>
         @endslot
 
         @slot('footer')
