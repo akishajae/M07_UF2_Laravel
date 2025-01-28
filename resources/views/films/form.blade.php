@@ -1,6 +1,6 @@
 <x-layout>
     <!-- Use d-flex to make the parent container a flexbox, align and justify to center -->
-    <div class="d-flex justify-content-center align-items-center vh-100">
+    <div class="d-flex justify-content-center align-items-center vh-100 my-10">
         <!-- Card with w-50 for width and p-3 for padding -->
         <div class="card w-50 p-3">
             <h1 class="mx-auto mt-3 text-danger" style="font-family: 'Gloock', serif">Añade tu película</h1>
