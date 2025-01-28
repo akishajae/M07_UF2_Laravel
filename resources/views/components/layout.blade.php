@@ -41,7 +41,7 @@
         <!-- Collapse -->
         <div class="collapse navbar-collapse" id="navbarCollapse">
           <!-- Nav -->
-          <div class="navbar-nav mx-lg-auto">
+          <div class="navbar-nav mx-lg-auto text-center">
             <a class="nav-item nav-link rounded m-2 py-2 {{ Route::currentRouteName() == 'welcome' ? 'active' : '' }}" href="{{ route('welcome') }}">Principal</a>
             <a class="nav-item nav-link rounded m-2 py-2 
             @switch (Route::currentRouteName())

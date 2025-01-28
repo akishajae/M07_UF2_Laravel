@@ -1,29 +1,29 @@
-<x-layout>
-    <h1 class="mx-auto mt-10 text-danger" style="font-family: 'Gloock', serif">{{ $title }}</h1>
+<x-layout> 
+    <h1 class="mx-auto mt-10 text-danger px-5 text-center" style="font-family: 'Gloock', serif">{{ $title }}</h1>
 
-    <ul class="nav nav-tabs d-flex justify-content-center align-items-center m-12">
+    <ul class="nav nav-tabs d-flex flex-nowrap justify-content-center align-items-center m-10 text-center">
         <li class="nav-item">
-            <a class="nav-link {{ Route::currentRouteName() == 'listFilms' ? 'active' : '' }}""
+            <a class="nav-link {{ Route::currentRouteName() == 'listFilms' ? 'active' : '' }}"
                 href=" {{ route('listFilms') }}">Todas</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link {{ Route::currentRouteName() == 'oldFilms' ? 'active' : '' }}""
+            <a class="nav-link {{ Route::currentRouteName() == 'oldFilms' ? 'active' : '' }}"
                 href=" {{ route('oldFilms') }}">Más antiguas</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link {{ Route::currentRouteName() == 'newFilms' ? 'active' : '' }}""
+            <a class="nav-link {{ Route::currentRouteName() == 'newFilms' ? 'active' : '' }}"
                 href=" {{ route('newFilms') }}">Más nuevas</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link {{ Route::currentRouteName() == 'sortFilms' ? 'active' : '' }}""
+            <a class="nav-link {{ Route::currentRouteName() == 'sortFilms' ? 'active' : '' }}"
                 href=" {{ route('sortFilms') }}">Ordenadas por año</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link {{ Route::currentRouteName() == 'filmsByYear' ? 'active' : '' }}""
+            <a class="nav-link {{ Route::currentRouteName() == 'filmsByYear' ? 'active' : '' }}"
                 href=" {{ route('filmsByYear') }}">Filtradas por año</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link {{ Route::currentRouteName() == 'filmsByGenre' ? 'active' : '' }}""
+            <a class="nav-link {{ Route::currentRouteName() == 'filmsByGenre' ? 'active' : '' }}"
                 href=" {{ route('filmsByGenre') }}">Filtradas por género</a>
         </li>
     </ul>
