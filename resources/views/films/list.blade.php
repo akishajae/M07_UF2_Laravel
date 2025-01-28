@@ -36,26 +36,20 @@
     @endif
 
     @if (Route::currentRouteName() == 'filmsByYear')
-        <div class="d-flex justify-content-center">
-            <div class="col-10 col-sm-5 col-md-6 col-lg-3">
-                <form method="POST" action="{{ route('filmsByYear') }}" class="d-flex w-100">
-                    @csrf
-                    <input type="number" name="year" id="year" class="form-control mb-3 mr-2"
-                        placeholder="Introduce un año">
-                    <button type="submit" class="btn btn-sm btn-danger mb-3">Filtrar</button>
-                </form>
-            </div>
+        <div class="d-flex align-items-center mx-lg-auto">
+            <form method="POST" action="{{ route('filmsByYear') }}" class="d-flex w-100">
+                @csrf
+                <input type="number" name="year" id="year" class="form-control mb-3 mr-2" placeholder="Introduce un año">
+                <button type="submit" class="btn btn-sm btn-danger mb-3">Filtrar</button>
+            </form>
         </div>
     @elseif (Route::currentRouteName() == 'filmsByGenre')
-        <div class="d-flex justify-content-center">
-            <div class="col-10 col-sm-5 col-md-6 col-lg-3">
-                <form method="POST" action="{{ route('filmsByGenre') }}" class="d-flex w-100">
-                    @csrf
-                    <input type="text" name="genre" id="genre" class="form-control mb-3 mr-2"
-                        placeholder="Introduce un género">
-                    <button type="submit" class="btn btn-sm btn-danger mb-3">Filtrar</button>
-                </form>
-            </div>
+        <div class="d-flex align-items-center mx-lg-auto">
+            <form method="POST" action="{{ route('filmsByGenre') }}" class="d-flex w-100">
+                @csrf
+                <input type="text" name="genre" id="genre" class="form-control mb-3 mr-2" placeholder="Introduce un género">
+                <button type="submit" class="btn btn-sm btn-danger mb-3">Filtrar</button>
+            </form>
         </div>
     @endif
 
@@ -64,7 +58,7 @@
             <strong>Oh no!</strong> No se ha encontrado ninguna película.
         </div>
     @else
-        <div align="center" class="container my-5 table-responsive">
+        <div align="center" class="container my-5 table-responsive mb-10">
             <table class="table table-striped table-bordered mb-12">
                 <tr style="font-family: 'Gloock', serif;" class="text-center">
                     <th class="text-dark font-weight-bold text-uppercase">Título</th>
@@ -97,7 +91,7 @@
                                         d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z" />
                                 </svg>
                             </a>
-                            <a href="#" class="btn btn-outline-danger">
+                            <a href="#" class="btn btn-outline-danger" data-toggle="modal" data-target="#modalConfirmDelete">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                                     class="bi bi-trash3-fill" viewBox="0 0 16 16">
                                     <path
@@ -110,4 +104,29 @@
             </table>
         </div>
     @endif
+
+    <!-- Modal -->
+    <div class="modal fade" id="modalConfirmDelete" tabindex="-1" role="dialog"
+        aria-labelledby="modalConfirmDeleteTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title text-uppercase text-danger" id="modalConfirmDeleteLongTitle">Eliminar película...
+                    </h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>Es esto realmente lo que quieres? Ya no habrá vuelta atrás...</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                    <a href="{{ route('deleteFilm', ['id' => $film['id']]) }}"">
+                        <button type=" button" class="btn btn-danger">Eliminar</button>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
 </x-layout>
