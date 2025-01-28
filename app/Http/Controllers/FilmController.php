@@ -203,15 +203,16 @@ class FilmController extends Controller
         if ($filmId) {
             $film = Film::find($filmId);
 
-            dd('delete');
+            // dd('delete', $filmId);
 
             $film->delete();
             return redirect()->route('listFilms')->with('success', 'La película ha sido eliminada.');
 
             // validate if film is found
             if (!$film) {
-                dd('not found');
-               
+                return redirect()->route('viewForm')
+                    ->withInput($request->all())
+                    ->with('error', 'Ya hay una película con este título.');
             }
         }
     }
