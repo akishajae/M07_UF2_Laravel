@@ -1,4 +1,4 @@
-<x-layout> 
+<x-layout>
     <h1 class="mx-auto mt-10 text-danger px-5 text-center" style="font-family: 'Gloock', serif">{{ $title }}</h1>
 
     <ul class="nav nav-tabs d-flex flex-nowrap justify-content-center align-items-center m-10 text-center">
@@ -106,27 +106,18 @@
     @endif
 
     <!-- Modal -->
-    <div class="modal fade" id="modalConfirmDelete" tabindex="-1" role="dialog"
-        aria-labelledby="modalConfirmDeleteTitle" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title text-uppercase text-danger" id="modalConfirmDeleteLongTitle">Eliminar película...
-                    </h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <p>Es esto realmente lo que quieres? Ya no habrá vuelta atrás...</p>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                    <a href="{{ route('deleteFilm', ['id' => $film['id']]) }}"">
-                        <button type=" button" class="btn btn-danger">Eliminar</button>
-                    </a>
-                </div>
-            </div>
-        </div>
-    </div>
+    <x-modal>
+        <x-slot name="modalId">modalConfirmDelete</x-slot>
+        <x-slot name="title">Eliminando película...</x-slot>
+        <x-slot name="body">¿Realmente quieres eliminar esta película?</x-slot>
+        <x-slot name="btnSecondary">
+            Cancelar
+        </x-slot>
+        <x-slot name="btnPrimary">
+            <form action="{{ route('deleteFilm', ['id' => $film->id]) }}" method="GET" class="d-inline">
+                @csrf
+                <button type="submit" class="btn btn-danger">Eliminar</button>
+            </form>
+        </x-slot>
+    </x-modal>
 </x-layout>
