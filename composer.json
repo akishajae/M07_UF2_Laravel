@@ -61,11 +61,5 @@
         }
     },
     "minimum-stability": "stable",
-    "prefer-stable": true,
-    "repositories": [
-    {
-      "type": "composer",
-      "url": "https://wire-elements-pro.composer.sh"
-    }
-  ]
+    "prefer-stable": true
 }
