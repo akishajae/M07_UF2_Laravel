@@ -6,7 +6,7 @@ use App\Http\Requests\StoreFilmRequest;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
 use App\Models\Film;
-use Log;
+use Illuminate\Support\Facades\Log;
 
 class FilmController extends Controller
 {
@@ -172,14 +172,13 @@ class FilmController extends Controller
             $film = Film::find($filmId);
 
             // validate if film is found
-            // if (!$film) {
-            //     dd(1);
-            //     Log::error('Error retrieving film with name: ' . $request->name);
+            if (!$film) {
+                Log::error('Error retrieving film with name: ' . $request->name);
 
-            //     return redirect()->route('viewForm')
-            //         ->withInput($request->all())
-            //         ->with('error', 'No se ha encontrado esa película.');
-            // }
+                return redirect()->route('viewForm')
+                    ->withInput($request->all())
+                    ->with('error', 'No se ha encontrado esa película.');
+            }
 
             // form data
             $validated = $request->validated();
@@ -193,32 +192,35 @@ class FilmController extends Controller
 
             try {
                 $film->save();
-                Log::info('Film updated successfully: ' . $request->name);
+                Log::info('Film updated successfully with name: ' . $request->name);
 
                 return redirect()->route('listFilms')->with('success', 'Tu película ha sido editada.');
             } catch (\Exception $e) {
-                Log::error('Failed saving film with data: ' . json_encode($request->all()));
+                Log::error('Failed to save film with data: ' . $e->getMessage());
+                // redirect
             }
-
         } else {
             $validated = $request->validated();
 
-            // validate if film exists
-            if (!($this->isFilm($request->name))) {
-                Film::create($validated);
-
-                Log::info('Film created successfully: ' . $request->name);
-
-                return redirect()->route('listFilms')->with('success', 'Tu película ha sido añadida.');
-            } else {
-                Log::error('Failed to save film with data: ' . json_encode($request->all()));
-
-                return redirect()->route('viewForm')
-                    ->withInput($request->all())
-                    ->with('error', 'Ya hay una película con este título.');
-
-                // It was more convenient to have the error in the form, not in the welcome page
-                // return redirect()->route('welcome')->with('error', 'This film already exists.');
+            try {
+                // validate if film exists
+                if (!($this->isFilm($request->name))) {
+                    Film::create($validated);
+    
+                    Log::info('Film created successfully: ' . $request->name);
+    
+                    return redirect()->route('listFilms')->with('success', 'Tu película ha sido añadida.');
+                } else {
+                    return redirect()->route('viewForm')
+                        ->withInput($request->all())
+                        ->with('error', 'Ya hay una película con este título.');
+    
+                    // It was more convenient to have the error in the form, not in the welcome page
+                    // return redirect()->route('welcome')->with('error', 'This film already exists.');
+                }
+            } catch (\Exception $e) {
+                Log::error('Failed to save film: ' . $e->getMessage());
+                // redirect
             }
         }
     }
