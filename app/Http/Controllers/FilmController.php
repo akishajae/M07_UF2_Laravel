@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreFilmRequest;
+use DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
 use App\Models\Film;
@@ -91,20 +92,34 @@ class FilmController extends Controller
      */
     public function listFilmsByGenre(Request $request)
     {
-        $genre = $request->input('genre');
+        try {
+            $genre = $request->input('genre');
 
-        //list based on genre informed
-        $films_filtered = Film::where('genre', '=', $genre)->get();
+            $query = Film::where('genre', '=', $genre);
+            
+            $sql = $query->toSql();
+            Log::info('SQL Query about to be executed: ' . $sql);
 
-        $title = "Colección de todas las películas filtradas por género cinematográfico";
-        $films = FilmController::readFilms();
+            //list based on genre informed
+            $films_filtered = $query->get();
+            Log::info('SQL Query executed successfully: ' . $sql);
 
-        //if genre is null
-        if (is_null($genre)) {
-            return view('films.list', ["films" => $films, "title" => $title]);
+            $title = "Colección de todas las películas filtradas por género cinematográfico";
+            $films = FilmController::readFilms();
+
+            //if genre is null
+            if (is_null($genre)) {
+                return view('films.list', ["films" => $films, "title" => $title]);
+            }
+
+            return view('films.list', ["films" => $films_filtered, "title" => $title]);
+        } catch (\Exception $e) {
+            Log::warning('SQL Query failed: ' . $e->getMessage());
+
+            // TO CHANGE
+            return response()->json(['error' => 'Failed to retrieve films'], 500);
+            // REDIRECT
         }
-
-        return view('films.list', ["films" => $films_filtered, "title" => $title]);
     }
 
     /**
@@ -113,11 +128,28 @@ class FilmController extends Controller
      */
     public function sortFilms()
     {
-        $films_filtered = Film::orderByDesc('year')->get();
+        try {
+            // throw new \Exception('Unable to retrieve films.');
 
-        $title = "Colección de todas las películas ordenadas por año";
+            $query = Film::orderByDesc('year');
 
-        return view("films.list", ["films" => $films_filtered, "title" => $title]);
+            $sql = $query->toSql();
+            Log::info('SQL Query about to be executed: ' . $sql);
+
+            // list of sorted films by year
+            $films_filtered = $query->get();
+            Log::info('SQL Query executed successfully: ' . $sql);
+
+            $title = "Colección de todas las películas ordenadas por año";
+
+            return view("films.list", ["films" => $films_filtered, "title" => $title]);
+        } catch (\Exception $e) {
+            Log::warning('SQL Query failed: ' . $e->getMessage());
+
+            // TO CHANGE
+            return response()->json(['error' => 'Failed to retrieve films'], 500);
+            // REDIRECT
+        }
     }
 
     /**
@@ -126,12 +158,28 @@ class FilmController extends Controller
      */
     public function countFilms()
     {
-        $count_films = Film::count();
+        try {
+            // throw new \Exception('Unable to retrieve films.');
 
-        $title = "Galería de películas";
-        $films = FilmController::readFilms();
+            DB::listen(function ($query) {
+                Log::info('SQL Query about to be executed: ' . $query->sql);
+            });
 
-        return view("films.counter", ["films" => $films, "countFilms" => $count_films, "title" => $title]);
+            // get number of films
+            $count_films = Film::count();
+            Log::info('SQL Query executed successfully. Number of films retrieved: ' . $count_films);
+
+            $title = "Galería de películas";
+            $films = FilmController::readFilms();
+
+            return view("films.counter", ["films" => $films, "countFilms" => $count_films, "title" => $title]);
+        } catch (\Exception $e) {
+            Log::warning('SQL Query failed: ' . $e->getMessage());
+
+            // TO CHANGE
+            return response()->json(['error' => 'Failed to retrieve films'], 500);
+            // REDIRECT
+        }
     }
 
     public function isFilm(string $filmName)
@@ -255,7 +303,7 @@ class FilmController extends Controller
                 Log::info('Film deleted successfully. Film ID: ' . $film->id);
 
                 $film->delete();
-                
+
                 return redirect()->route('listFilms')->with('success', 'La película ha sido eliminada.');
             }
         } catch (\Exception $e) {
