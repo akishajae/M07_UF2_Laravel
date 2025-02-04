@@ -91,7 +91,8 @@
                                         d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z" />
                                 </svg>
                             </a>
-                            <a href="#" class="btn btn-outline-danger" data-toggle="modal" data-target="#modalConfirmDelete">
+                            <a href="#" class="btn btn-outline-danger" data-toggle="modal" data-target="#modalConfirmDelete"
+                                data-id="{{ $film['id'] }}" data-name="{{ $film['name'] }}">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                                     class="bi bi-trash3-fill" viewBox="0 0 16 16">
                                     <path
@@ -109,15 +110,37 @@
     <x-modal>
         <x-slot name="modalId">modalConfirmDelete</x-slot>
         <x-slot name="title">Eliminando película...</x-slot>
-        <x-slot name="body">¿Realmente quieres eliminar esta película?</x-slot>
+        <x-slot name="body">¿Realmente quieres eliminar esta película <span id="film-name"></span>?</x-slot>
         <x-slot name="btnSecondary">
             Cancelar
         </x-slot>
         <x-slot name="btnPrimary">
-            <form action="{{ route('deleteFilm', ['id' => $film->id]) }}" method="GET" class="d-inline">
+            <form action="" method="GET" id="delete-form"
+                class="d-inline">
                 @csrf
                 <button type="submit" class="btn btn-danger">Eliminar</button>
             </form>
         </x-slot>
     </x-modal>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // get delete buttons
+            const deleteButtons = document.querySelectorAll('[data-toggle="modal"][data-target="#modalConfirmDelete"]');
+
+            deleteButtons.forEach(button) {
+                button.addEventListener('click', function (event) {
+                    event.preventDefault();
+
+                    const filmId = button.getAttribute('data-id');
+                    const filmName = button.getAttribute('data-name');
+
+                    document.getElementById('film-name').textContent = filmName;
+
+                    const form = document.getElementById('delete-form');
+                    form.action = '/films/' + filmId;
+                });
+            }
+        });
+    </script>
 </x-layout>
