@@ -95,6 +95,7 @@ class FilmController extends Controller
         try {
             $genre = $request->input('genre');
 
+            // QUESTION: local.INFO: SQL Query executed successfully: select * from `films` where `genre` = ?
             $query = Film::where('genre', '=', $genre);
             
             $sql = $query->toSql();
@@ -245,6 +246,7 @@ class FilmController extends Controller
 
                     return redirect()->route('listFilms')->with('success', 'Tu película ha sido editada.');
                 } else {
+                    // QUESTION: log???
                     return redirect()->route('viewForm')
                         ->withInput($request->all())
                         ->with('error', 'Ya hay una película con este título.');
