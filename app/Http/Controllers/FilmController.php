@@ -152,10 +152,7 @@ class FilmController extends Controller
             if (!$film) {
                 Log::error('Error retrieving film with ID: ' . $filmId);
 
-                // abort(404);
-
-                // return redirect()->route('viewForm')
-                //     ->with('error', 'No se ha encontrado esa película.');
+                abort(404);
             }
 
             return view('films.form', ['film' => $film]);
@@ -169,74 +166,101 @@ class FilmController extends Controller
     {
         $filmId = $request->query('filmId');
         if ($filmId) {
-            $film = Film::find($filmId);
-
-            // validate if film is found
-            if (!$film) {
-                Log::error('Error retrieving film with name: ' . $request->name);
-
-                return redirect()->route('viewForm')
-                    ->withInput($request->all())
-                    ->with('error', 'No se ha encontrado esa película.');
-            }
-
-            // form data
-            $validated = $request->validated();
-
-            $film->name = $validated['name'];
-            $film->year = $validated['year'];
-            $film->genre = $validated['genre'];
-            $film->country = $validated['country'];
-            $film->duration = $validated['duration'];
-            $film->img_url = $validated['img_url'];
-
             try {
-                $film->save();
-                Log::info('Film updated successfully with name: ' . $request->name);
+                // throw new \Exception('Unable to update film due to missing information.');
 
-                return redirect()->route('listFilms')->with('success', 'Tu película ha sido editada.');
+                Log::info('Starting film update for: ' . $request->name);
+
+                $film = Film::find($filmId);
+
+                // validate if film is found
+                if (!$film) {
+                    Log::error('Error retrieving film with ID: ' . $filmId);
+
+                    abort(404);
+                }
+
+                // form data
+                $validated = $request->validated();
+
+                if (!($this->isFilm($request->name))) {
+                    $film->name = $validated['name'];
+                    $film->year = $validated['year'];
+                    $film->genre = $validated['genre'];
+                    $film->country = $validated['country'];
+                    $film->duration = $validated['duration'];
+                    $film->img_url = $validated['img_url'];
+
+                    $film->save();
+
+                    Log::info('Film updated successfully. Film ID: ' . $film->id);
+
+                    return redirect()->route('listFilms')->with('success', 'Tu película ha sido editada.');
+                } else {
+                    return redirect()->route('viewForm')
+                        ->withInput($request->all())
+                        ->with('error', 'Ya hay una película con este título.');
+                }
             } catch (\Exception $e) {
-                Log::error('Failed to save film with data: ' . $e->getMessage());
-                // redirect
+                Log::error('Failed to update film. Error: ' . $e->getMessage());
+                // REDIRECT
             }
         } else {
-            $validated = $request->validated();
-
             try {
+                // throw new \Exception('Unable to create film due to missing information.');
+
+                Log::info('Starting film creation for: ' . $request->name);
+
+                $validated = $request->validated();
+
                 // validate if film exists
                 if (!($this->isFilm($request->name))) {
-                    Film::create($validated);
-    
-                    Log::info('Film created successfully: ' . $request->name);
-    
+                    $film = Film::create($validated);
+
+                    Log::info('Film created successfully. Film ID: ' . $film->id);
+
                     return redirect()->route('listFilms')->with('success', 'Tu película ha sido añadida.');
                 } else {
                     return redirect()->route('viewForm')
                         ->withInput($request->all())
                         ->with('error', 'Ya hay una película con este título.');
-    
+
                     // It was more convenient to have the error in the form, not in the welcome page
                     // return redirect()->route('welcome')->with('error', 'This film already exists.');
                 }
             } catch (\Exception $e) {
-                Log::error('Failed to save film: ' . $e->getMessage());
-                // redirect
+                Log::error('Failed to create film. Error: ' . $e->getMessage());
+                // REDIRECT
             }
         }
     }
 
     public function deleteFilm($filmId)
     {
-        if ($filmId) {
-            $film = Film::find($filmId);
+        try {
+            // throw new \Exception('Unable to delete film.');
 
-            // validate if film is not found
-            if (!$film) {
-                return redirect()->route('listFilms');
+            if ($filmId) {
+                $film = Film::find($filmId);
+
+                Log::info('Starting film deletion for: ' . $film->name);
+
+                // validate if film is not found
+                if (!$film) {
+                    Log::error('Error retrieving film with ID: ' . $filmId);
+
+                    abort(404);
+                }
+
+                Log::info('Film deleted successfully. Film ID: ' . $film->id);
+
+                $film->delete();
+                
+                return redirect()->route('listFilms')->with('success', 'La película ha sido eliminada.');
             }
-
-            $film->delete();
-            return redirect()->route('listFilms')->with('success', 'La película ha sido eliminada.');
+        } catch (\Exception $e) {
+            Log::error('Failed to delete film. Error: ' . $e->getMessage());
+            // REDIRECT
         }
     }
 }
