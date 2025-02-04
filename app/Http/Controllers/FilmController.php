@@ -3,10 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreFilmRequest;
-use DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
 use App\Models\Film;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
 class FilmController extends Controller
@@ -95,11 +95,10 @@ class FilmController extends Controller
         try {
             $genre = $request->input('genre');
 
-            // QUESTION: local.INFO: SQL Query executed successfully: select * from `films` where `genre` = ?
             $query = Film::where('genre', '=', $genre);
-            
+
             $sql = $query->toSql();
-            Log::info('SQL Query about to be executed: ' . $sql);
+            Log::info('SQL Query about to be executed: ' . $sql . ' (' . $genre . ')');
 
             //list based on genre informed
             $films_filtered = $query->get();
@@ -185,7 +184,11 @@ class FilmController extends Controller
 
     public function isFilm(string $filmName)
     {
-        return Film::where('name', $filmName)->exists();
+        try {
+
+            return Film::where('name', $filmName)->exists();
+        } catch (\Exception $e) {
+        }
     }
 
     public function showList()
@@ -246,7 +249,6 @@ class FilmController extends Controller
 
                     return redirect()->route('listFilms')->with('success', 'Tu película ha sido editada.');
                 } else {
-                    // QUESTION: log???
                     return redirect()->route('viewForm')
                         ->withInput($request->all())
                         ->with('error', 'Ya hay una película con este título.');
