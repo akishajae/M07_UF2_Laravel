@@ -70,19 +70,32 @@ class FilmController extends Controller
      */
     public function listFilmsByYear(Request $request)
     {
-        $year = $request->input('year');
+        try {
+            $year = $request->input('year');
 
-        $films_filtered = Film::where('year', '=', $year)->get();
+            $query = Film::where('year', '=', $year);
 
-        $title = "Colección de todas las películas filtradas por año de estreno";
-        $films = FilmController::readFilms();
+            $sql = $query->toSql();
+            Log::info('SQL Query about to be executed: ' . $sql . ' (' . $year . ')');
 
-        //if year is null
-        if (is_null($year)) {
-            return view('films.list', ["films" => $films, "title" => $title]);
+            $films_filtered = $query->get();
+
+            $title = "Colección de todas las películas filtradas por año de estreno";
+            $films = FilmController::readFilms();
+
+            //if year is null
+            if (is_null($year)) {
+                return view('films.list', ["films" => $films, "title" => $title]);
+            }
+
+            return view("films.list", ["films" => $films_filtered, "title" => $title]);
+        } catch (\Exception $e) {
+            Log::warning('SQL Query failed: ' . $e->getMessage());
+
+            // TO CHANGE
+            return response()->json(['error' => 'Failed to retrieve films'], 500);
+            // REDIRECT
         }
-
-        return view("films.list", ["films" => $films_filtered, "title" => $title]);
     }
 
     /**
@@ -184,11 +197,7 @@ class FilmController extends Controller
 
     public function isFilm(string $filmName)
     {
-        try {
-
-            return Film::where('name', $filmName)->exists();
-        } catch (\Exception $e) {
-        }
+        return Film::where('name', $filmName)->exists();
     }
 
     public function showList()
