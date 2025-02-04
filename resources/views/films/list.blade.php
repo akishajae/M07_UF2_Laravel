@@ -36,20 +36,26 @@
     @endif
 
     @if (Route::currentRouteName() == 'filmsByYear')
-        <div class="d-flex align-items-center mx-lg-auto">
-            <form method="POST" action="{{ route('filmsByYear') }}" class="d-flex w-100">
-                @csrf
-                <input type="number" name="year" id="year" class="form-control mb-3 mr-2" placeholder="Introduce un año">
-                <button type="submit" class="btn btn-sm btn-danger mb-3">Filtrar</button>
-            </form>
+        <div class="d-flex justify-content-center">
+            <div class="col-10 col-sm-5 col-md-6 col-lg-3">
+                <form method="POST" action="{{ route('filmsByYear') }}" class="d-flex w-100">
+                    @csrf
+                    <input type="number" name="year" id="year" class="form-control mb-3 mr-2"
+                        placeholder="Introduce un año">
+                    <button type="submit" class="btn btn-sm btn-danger mb-3">Filtrar</button>
+                </form>
+            </div>
         </div>
     @elseif (Route::currentRouteName() == 'filmsByGenre')
-        <div class="d-flex align-items-center mx-lg-auto">
-            <form method="POST" action="{{ route('filmsByGenre') }}" class="d-flex w-100">
-                @csrf
-                <input type="text" name="genre" id="genre" class="form-control mb-3 mr-2" placeholder="Introduce un género">
-                <button type="submit" class="btn btn-sm btn-danger mb-3">Filtrar</button>
-            </form>
+        <div class="d-flex justify-content-center">
+            <div class="col-10 col-sm-5 col-md-6 col-lg-3">
+                <form method="POST" action="{{ route('filmsByGenre') }}" class="d-flex w-100">
+                    @csrf
+                    <input type="text" name="genre" id="genre" class="form-control mb-3 mr-2"
+                        placeholder="Introduce un género">
+                    <button type="submit" class="btn btn-sm btn-danger mb-3">Filtrar</button>
+                </form>
+            </div>
         </div>
     @endif
 
