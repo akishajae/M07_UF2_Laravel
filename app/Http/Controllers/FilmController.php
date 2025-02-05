@@ -28,9 +28,7 @@ class FilmController extends Controller
         } catch (\Exception $e) {
             Log::warning(__FUNCTION__ . '() | SQL Query failed: ' . $e->getMessage());
 
-            // TO CHANGE
-            return response()->json(['error' => 'Failed to retrieve films'], 500);
-            // REDIRECT
+            abort(500);
         }
     }
     /**
@@ -55,9 +53,7 @@ class FilmController extends Controller
         } catch (\Exception $e) {
             Log::warning(__FUNCTION__ . '() | SQL Query failed: ' . $e->getMessage());
 
-            // TO CHANGE
-            return response()->json(['error' => 'Failed to retrieve films'], 500);
-            // REDIRECT
+            abort(500);
         }
     }
 
@@ -83,9 +79,7 @@ class FilmController extends Controller
         } catch (\Exception $e) {
             Log::warning(__FUNCTION__ . '() | SQL Query failed: ' . $e->getMessage());
 
-            // TO CHANGE
-            return response()->json(['error' => 'Failed to retrieve films'], 500);
-            // REDIRECT
+            abort(500);
         }
     }
     /**
@@ -128,9 +122,7 @@ class FilmController extends Controller
         } catch (\Exception $e) {
             Log::warning(__FUNCTION__ . '() | SQL Query failed: ' . $e->getMessage());
 
-            // TO CHANGE
-            return response()->json(['error' => 'Failed to retrieve films'], 500);
-            // REDIRECT
+            abort(500);
         }
     }
 
@@ -164,9 +156,7 @@ class FilmController extends Controller
         } catch (\Exception $e) {
             Log::warning(__FUNCTION__ . '() | SQL Query failed: ' . $e->getMessage());
 
-            // TO CHANGE
-            return response()->json(['error' => 'Failed to retrieve films'], 500);
-            // REDIRECT
+            abort(500);
         }
     }
 
@@ -193,9 +183,7 @@ class FilmController extends Controller
         } catch (\Exception $e) {
             Log::warning(__FUNCTION__ . '() | SQL Query failed: ' . $e->getMessage());
 
-            // TO CHANGE
-            return response()->json(['error' => 'Failed to retrieve films'], 500);
-            // REDIRECT
+            abort(500);
         }
     }
 
@@ -223,9 +211,7 @@ class FilmController extends Controller
         } catch (\Exception $e) {
             Log::warning(__FUNCTION__ . '() | SQL Query failed: ' . $e->getMessage());
 
-            // TO CHANGE
-            return response()->json(['error' => 'Failed to retrieve films'], 500);
-            // REDIRECT
+            abort(500);
         }
     }
 
