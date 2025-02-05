@@ -18,8 +18,20 @@ class FilmController extends Controller
     public static function readFilms()
     {
         // $films = Storage::json('/public/films.json');
-        $films = Film::all();
-        return $films;
+        try {
+            DB::listen(function ($query) {
+                Log::info('Get all films | SQL Query executed successfully: ' . $query->sql);
+            });
+
+            $films = Film::all();
+            return $films;
+        } catch (\Exception $e) {
+            Log::warning(__FUNCTION__ . '() | SQL Query failed: ' . $e->getMessage());
+
+            // TO CHANGE
+            return response()->json(['error' => 'Failed to retrieve films'], 500);
+            // REDIRECT
+        }
     }
     /**
      * List films older than input year 
@@ -27,14 +39,26 @@ class FilmController extends Controller
      */
     public function listOldFilms($year = null)
     {
-        if (is_null($year))
-            $year = 2000;
+        try {
+            if (is_null($year))
+                $year = 2000;
 
-        $title = "Colección de películas antiguas (antes de $year)";
+            $query = Film::where('year', '<', $year);
 
-        $old_films = Film::where('year', '<', $year)->get();
+            $sql = $query->toSql();
+            Log::info(__FUNCTION__ . '() | SQL Query executed successfully: ' . $sql . ' (' . $year . ')');
 
-        return view('films.list', ["films" => $old_films, "title" => $title]);
+            $title = "Colección de películas antiguas (antes de $year)";
+            $old_films = $query->get();
+
+            return view('films.list', ["films" => $old_films, "title" => $title]);
+        } catch (\Exception $e) {
+            Log::warning(__FUNCTION__ . '() | SQL Query failed: ' . $e->getMessage());
+
+            // TO CHANGE
+            return response()->json(['error' => 'Failed to retrieve films'], 500);
+            // REDIRECT
+        }
     }
 
     /**
@@ -43,14 +67,26 @@ class FilmController extends Controller
      */
     public function listNewFilms($year = null)
     {
-        if (is_null($year))
-            $year = 2000;
+        try {
+            if (is_null($year))
+                $year = 2000;
 
-        $title = "Colección de películas nuevas (después de $year)";
+            $query = Film::where('year', '>=', $year);
 
-        $new_films = Film::where('year', '>=', $year)->get();
+            $sql = $query->toSql();
+            Log::info(__FUNCTION__ . '() | SQL Query executed successfully: ' . $sql . ' (' . $year . ')');
 
-        return view('films.list', ["films" => $new_films, "title" => $title]);
+            $title = "Colección de películas nuevas (después de $year)";
+            $new_films = $query->get();
+
+            return view('films.list', ["films" => $new_films, "title" => $title]);
+        } catch (\Exception $e) {
+            Log::warning(__FUNCTION__ . '() | SQL Query failed: ' . $e->getMessage());
+
+            // TO CHANGE
+            return response()->json(['error' => 'Failed to retrieve films'], 500);
+            // REDIRECT
+        }
     }
     /**
      * Lista TODAS las películas (o filtra x año o categoría.)
@@ -76,7 +112,7 @@ class FilmController extends Controller
             $query = Film::where('year', '=', $year);
 
             $sql = $query->toSql();
-            Log::info('SQL Query about to be executed: ' . $sql . ' (' . $year . ')');
+            Log::info(__FUNCTION__ . '() | SQL Query executed successfully: ' . $sql . ' (' . $year . ')');
 
             $films_filtered = $query->get();
 
@@ -90,7 +126,7 @@ class FilmController extends Controller
 
             return view("films.list", ["films" => $films_filtered, "title" => $title]);
         } catch (\Exception $e) {
-            Log::warning('SQL Query failed: ' . $e->getMessage());
+            Log::warning(__FUNCTION__ . '() | SQL Query failed: ' . $e->getMessage());
 
             // TO CHANGE
             return response()->json(['error' => 'Failed to retrieve films'], 500);
@@ -111,11 +147,10 @@ class FilmController extends Controller
             $query = Film::where('genre', '=', $genre);
 
             $sql = $query->toSql();
-            Log::info('SQL Query about to be executed: ' . $sql . ' (' . $genre . ')');
+            Log::info(__FUNCTION__ . '() | SQL Query executed successfully: ' . $sql . ' (' . $genre . ')');
 
             //list based on genre informed
             $films_filtered = $query->get();
-            Log::info('SQL Query executed successfully: ' . $sql);
 
             $title = "Colección de todas las películas filtradas por género cinematográfico";
             $films = FilmController::readFilms();
@@ -127,7 +162,7 @@ class FilmController extends Controller
 
             return view('films.list', ["films" => $films_filtered, "title" => $title]);
         } catch (\Exception $e) {
-            Log::warning('SQL Query failed: ' . $e->getMessage());
+            Log::warning(__FUNCTION__ . '() | SQL Query failed: ' . $e->getMessage());
 
             // TO CHANGE
             return response()->json(['error' => 'Failed to retrieve films'], 500);
@@ -147,17 +182,16 @@ class FilmController extends Controller
             $query = Film::orderByDesc('year');
 
             $sql = $query->toSql();
-            Log::info('SQL Query about to be executed: ' . $sql);
+            Log::info(__FUNCTION__ . '() | SQL Query executed successfully: ' . $sql);
 
             // list of sorted films by year
             $films_filtered = $query->get();
-            Log::info('SQL Query executed successfully: ' . $sql);
 
             $title = "Colección de todas las películas ordenadas por año";
 
             return view("films.list", ["films" => $films_filtered, "title" => $title]);
         } catch (\Exception $e) {
-            Log::warning('SQL Query failed: ' . $e->getMessage());
+            Log::warning(__FUNCTION__ . '() | SQL Query failed: ' . $e->getMessage());
 
             // TO CHANGE
             return response()->json(['error' => 'Failed to retrieve films'], 500);
@@ -180,14 +214,14 @@ class FilmController extends Controller
 
             // get number of films
             $count_films = Film::count();
-            Log::info('SQL Query executed successfully. Number of films retrieved: ' . $count_films);
+            Log::info(__FUNCTION__ . '() | SQL Query executed successfully. Number of films retrieved: ' . $count_films);
 
             $title = "Galería de películas";
             $films = FilmController::readFilms();
 
             return view("films.counter", ["films" => $films, "countFilms" => $count_films, "title" => $title]);
         } catch (\Exception $e) {
-            Log::warning('SQL Query failed: ' . $e->getMessage());
+            Log::warning(__FUNCTION__ . '() | SQL Query failed: ' . $e->getMessage());
 
             // TO CHANGE
             return response()->json(['error' => 'Failed to retrieve films'], 500);
@@ -211,7 +245,7 @@ class FilmController extends Controller
             $film = Film::find($filmId);
 
             if (!$film) {
-                Log::error('Error retrieving film with ID: ' . $filmId);
+                Log::error(__FUNCTION__ . '() | Error retrieving film with ID: ' . $filmId);
 
                 abort(404);
             }
@@ -230,13 +264,13 @@ class FilmController extends Controller
             try {
                 // throw new \Exception('Unable to update film due to missing information.');
 
-                Log::info('Starting film update for: ' . $request->name);
+                Log::info(__FUNCTION__ . '() | Starting film update for: ' . $request->name);
 
                 $film = Film::find($filmId);
 
                 // validate if film is found
                 if (!$film) {
-                    Log::error('Error retrieving film with ID: ' . $filmId);
+                    Log::error(__FUNCTION__ . '() | Error retrieving film with ID: ' . $filmId);
 
                     abort(404);
                 }
@@ -254,7 +288,7 @@ class FilmController extends Controller
 
                     $film->save();
 
-                    Log::info('Film updated successfully. Film ID: ' . $film->id);
+                    Log::info(__FUNCTION__ . '() | Film updated successfully. Film ID: ' . $film->id);
 
                     return redirect()->route('listFilms')->with('success', 'Tu película ha sido editada.');
                 } else {
@@ -263,7 +297,7 @@ class FilmController extends Controller
                         ->with('error', 'Ya hay una película con este título.');
                 }
             } catch (\Exception $e) {
-                Log::error('Failed to update film. Error: ' . $e->getMessage());
+                Log::error(__FUNCTION__ . '() | Failed to update film. Error: ' . $e->getMessage());
                 // REDIRECT
             }
         } else {
@@ -278,7 +312,7 @@ class FilmController extends Controller
                 if (!($this->isFilm($request->name))) {
                     $film = Film::create($validated);
 
-                    Log::info('Film created successfully. Film ID: ' . $film->id);
+                    Log::info(__FUNCTION__ . '() | Film created successfully. Film ID: ' . $film->id);
 
                     return redirect()->route('listFilms')->with('success', 'Tu película ha sido añadida.');
                 } else {
@@ -290,7 +324,7 @@ class FilmController extends Controller
                     // return redirect()->route('welcome')->with('error', 'This film already exists.');
                 }
             } catch (\Exception $e) {
-                Log::error('Failed to create film. Error: ' . $e->getMessage());
+                Log::error(__FUNCTION__ . '() | Failed to create film. Error: ' . $e->getMessage());
                 // REDIRECT
             }
         }
@@ -304,23 +338,23 @@ class FilmController extends Controller
             if ($filmId) {
                 $film = Film::find($filmId);
 
-                Log::info('Starting film deletion for: ' . $film->name);
+                Log::info(__FUNCTION__ . '() | Starting film deletion for: ' . $film->name);
 
                 // validate if film is not found
                 if (!$film) {
-                    Log::error('Error retrieving film with ID: ' . $filmId);
+                    Log::error(__FUNCTION__ . '() | Error retrieving film with ID: ' . $filmId);
 
                     abort(404);
                 }
 
-                Log::info('Film deleted successfully. Film ID: ' . $film->id);
+                Log::info(__FUNCTION__ . '() | Film deleted successfully. Film ID: ' . $film->id);
 
                 $film->delete();
 
                 return redirect()->route('listFilms')->with('success', 'La película ha sido eliminada.');
             }
         } catch (\Exception $e) {
-            Log::error('Failed to delete film. Error: ' . $e->getMessage());
+            Log::error(__FUNCTION__ . '() | Failed to delete film. Error: ' . $e->getMessage());
             // REDIRECT
         }
     }
