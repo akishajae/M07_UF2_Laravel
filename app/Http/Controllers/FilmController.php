@@ -278,13 +278,13 @@ class FilmController extends Controller
 
                     return redirect()->route('listFilms')->with('success', 'Tu película ha sido editada.');
                 } else {
-                    return redirect()->route('viewForm')
+                    return redirect()->route('viewForm', ['id' => $film['id']])
                         ->withInput($request->all())
                         ->with('error', 'Ya hay una película con este título.');
                 }
             } catch (\Exception $e) {
                 Log::error(__FUNCTION__ . '() | Failed to update film. Error: ' . $e->getMessage());
-                // REDIRECT
+                abort(500);
             }
         } else {
             try {
@@ -341,7 +341,7 @@ class FilmController extends Controller
             }
         } catch (\Exception $e) {
             Log::error(__FUNCTION__ . '() | Failed to delete film. Error: ' . $e->getMessage());
-            // REDIRECT
+            abort(500);
         }
     }
 }
