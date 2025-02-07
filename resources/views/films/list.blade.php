@@ -116,7 +116,7 @@
     <x-modal>
         <x-slot name="modalId">modalConfirmDelete</x-slot>
         <x-slot name="title">Eliminando película...</x-slot>
-        <x-slot name="body">¿Realmente quieres eliminar esta película <span id="film-name"></span>?</x-slot>
+        <x-slot name="body">¿Realmente quieres eliminar esta película <span id="film-name" class="text-danger font-weight-bold"></span>?</x-slot>
         <x-slot name="btnSecondary">
             Cancelar
         </x-slot>
@@ -129,12 +129,12 @@
         </x-slot>
     </x-modal>
 
-    <script>
+    <script defer>
         document.addEventListener('DOMContentLoaded', function () {
             // get delete buttons
             const deleteButtons = document.querySelectorAll('[data-toggle="modal"][data-target="#modalConfirmDelete"]');
 
-            deleteButtons.forEach(button) {
+            deleteButtons.forEach((button) => {
                 button.addEventListener('click', function (event) {
                     event.preventDefault();
 
@@ -144,9 +144,9 @@
                     document.getElementById('film-name').textContent = filmName;
 
                     const form = document.getElementById('delete-form');
-                    form.action = '/films/' + filmId;
+                    form.action = `{{ route('deleteFilm', ['id' => ':filmId']) }}`.replace(':filmId', filmId); 
                 });
-            }
+            });
         });
     </script>
 </x-layout>
